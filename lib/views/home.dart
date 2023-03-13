@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutx/flutx.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/models/order.dart';
 import 'package:installation/views/order_details.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -22,31 +24,70 @@ class _Home extends State<Home> {
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text(
-            "Hello ${users['first_name']} ${users['last_name']}",
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              tooltip: 'Show Snackbar',
-              onPressed: () {},
+          resizeToAvoidBottomInset: true,
+          backgroundColor: Color.fromARGB(255, 243, 243, 243),
+          appBar: AppBar(
+            title: Text(
+              "Hello ${users['first_name']} ${users['last_name']}",
             ),
-            IconButton(
-              icon: const Icon(Icons.person_sharp),
-              tooltip: 'Show Snackbar',
-              onPressed: () {},
-            )
-          ],
-        ),
-        body: Container(
-            child: posts(
-          isLoading: homeController.isLoading.value,
-          orders: homeController.orders,
-        )),
-      );
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.notifications),
+                tooltip: 'Show Snackbar',
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.person_sharp),
+                tooltip: 'Show Snackbar',
+                onPressed: () {},
+              )
+            ],
+          ),
+          body: Container(
+            color: Color.fromARGB(255, 243, 243, 243),
+            child: Padding(
+              padding: FxSpacing.fromLTRB(24, 8, 24, 24),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FxSpacing.height(16),
+                    FxText.titleMedium(
+                      'My Orders',
+                      letterSpacing: 0.5,
+                      fontWeight: 700,
+                    ),
+                    FxSpacing.height(16),
+                    Container(
+                        child: posts(
+                      isLoading: homeController.isLoading.value,
+                      orders: homeController.orders,
+                    )),
+                    FxSpacing.height(24),
+                    FxText.titleMedium(
+                      'New Orders',
+                      letterSpacing: 0.5,
+                      fontWeight: 700,
+                    ),
+                    FxSpacing.height(16),
+                    Container(
+                        child: homeController.orders2.isNotEmpty
+                            ? posts(
+                                isLoading: homeController.isLoading.value,
+                                orders: homeController.orders2,
+                              )
+                            : Center(
+                                child: Container(
+                                  margin: FxSpacing.top(8),
+                                  child: FxText.titleMedium("No Result!",
+                                      fontWeight: 700),
+                                ),
+                              )),
+                  ],
+                ),
+              ),
+            ),
+          ));
     });
   }
 
@@ -63,65 +104,87 @@ class _Home extends State<Home> {
             padding: const EdgeInsets.all(30.0),
             child: Center(child: CircularProgressIndicator()),
           )
-        : RefreshIndicator(
-            onRefresh: () => _refreshProducts(context),
-            child: ListView.builder(
-              itemCount: orders.length,
-              itemBuilder: (context, index) {
-                return InkWell(
+        : ListView.separated(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: orders.length,
+            itemBuilder: (context, index) {
+              return InkWell(
                   onTap: () => {Get.to(OrderDetails(orders[index]))},
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  child: FxContainer.bordered(
                     color: Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                    paddingAll: 16,
+                    borderRadiusAll: 16,
+                    child: Row(
+                      children: [
+                        FxContainer(
+                            width: 56,
+                            padding: FxSpacing.y(12),
+                            borderRadiusAll: 4,
+                            bordered: true,
+                            color: Color.fromARGB(0, 0, 0, 0),
+                            child: Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  FxText.bodyMedium(
+                                    orders[index].date.weekday.toString(),
+                                    fontWeight: 700,
+                                  ),
+                                  FxText.bodySmall(
+                                    DateFormat('EEE')
+                                        .format(orders[index].date),
+                                    fontWeight: 600,
+                                  ),
+                                ],
+                              ),
+                            )),
+                        FxSpacing.width(16),
+                        Expanded(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          8.0, 8.0, 8.0, 2.0),
-                                      child: Text(
-                                        orders[index].site.name,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            children: [
+                              Row(
+                                children: [
+                                  FxText.bodySmall(
+                                    orders[index].customer!.firstName,
+                                    fontWeight: 600,
+                                  ),
+                                  FxSpacing.width(4),
+                                  FxText.bodySmall(
+                                    orders[index].customer!.lastName,
+                                    fontWeight: 600,
+                                  ),
+                                ],
+                              ),
+                              FxSpacing.height(4),
+                              FxText.bodySmall(
+                                orders[index].status,
+                                fontSize: 10,
+                              ),
+                              FxSpacing.height(4),
+                              FxText.bodySmall(
+                                orders[index].charger,
+                                fontSize: 10,
                               ),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.fromLTRB(15.0, 8.0, 8.0, 2.0),
-                          child: Text(
-                            orders[index].date.toString(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 1.0, left: 8.0, right: 8.0),
-                          child: Container(
-                            height: 1,
+                        FxSpacing.width(16),
+                        FxContainer.rounded(
+                          paddingAll: 4,
+                          child: Icon(
+                            Icons.arrow_forward,
+                            size: 16,
                           ),
                         ),
                       ],
                     ),
-                  ),
-                );
-              },
-            ));
+                  ));
+            },
+            separatorBuilder: (BuildContext context, int index) {
+              return FxSpacing.height(16);
+            },
+          );
   }
 }

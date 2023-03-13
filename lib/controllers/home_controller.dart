@@ -6,6 +6,7 @@ import 'package:installation/services/api.dart';
 class HomeController extends GetxController {
   var isLoading = true.obs;
   List<Order> orders = [];
+  List<Order> orders2 = [];
   var isDisabled = true.obs;
 
   @override
@@ -17,8 +18,9 @@ class HomeController extends GetxController {
   Future<void> getOrder() async {
     isLoading.value = true;
     var response = await Api.getOrders();
-    var userResponse = OrderResponse.fromJson(response.data);
-    orders.addAll(userResponse.data);
+    var orderResponse = OrderResponse.fromJson(response.data);
+    orders.addAll(orderResponse.data);
+    orders2.addAll(orderResponse.data2);
     isLoading.value = false;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutx/flutx.dart';
 import 'package:get/get.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
@@ -165,7 +166,7 @@ class _OrderDetails extends State<OrderDetails> {
                 style: TextStyle(fontSize: 16.0))),
         Container(
             margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Assigned To:  ${widget.order.agent.firstName!}",
+            child: Text("Assigned To:  ${widget.order.agent?.firstName}",
                 style: TextStyle(fontSize: 16.0))),
         Container(
             margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
