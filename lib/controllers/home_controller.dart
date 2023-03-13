@@ -5,8 +5,8 @@ import 'package:installation/services/api.dart';
 
 class HomeController extends GetxController {
   var isLoading = true.obs;
-  List<Order> orders = [];
-  List<Order> orders2 = [];
+  RxList<Order> orders = <Order>[].obs;
+  RxList<Order> orders2 = <Order>[].obs;
   var isDisabled = true.obs;
 
   @override

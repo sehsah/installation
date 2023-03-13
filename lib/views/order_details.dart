@@ -5,7 +5,6 @@ import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/models/order.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -16,9 +15,31 @@ class OrderDetails extends StatefulWidget {
   _OrderDetails createState() => _OrderDetails();
 }
 
-class _OrderDetails extends State<OrderDetails> {
+class _OrderDetails extends State<OrderDetails>
+    with SingleTickerProviderStateMixin {
   final authController = Get.put(AuthController());
   final homeController = Get.put(HomeController());
+  int _currentStep = 1;
+  TabController? _tabController;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController!.animation!.addListener(() {
+      final aniValue = _tabController!.animation!.value;
+      if (aniValue - _currentIndex > 0.5) {
+        setState(() {
+          _currentIndex = _currentIndex + 1;
+        });
+      } else if (aniValue - _currentIndex < -0.5) {
+        setState(() {
+          _currentIndex = _currentIndex - 1;
+        });
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +47,23 @@ class _OrderDetails extends State<OrderDetails> {
       length: 5,
       child: Scaffold(
         appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: "customer"),
-              Tab(text: "Site"),
-              Tab(text: "Details"),
-              Tab(text: "Actions"),
-              Tab(text: "Logs"),
-            ],
+          iconTheme: IconThemeData(
+            color: Palette.maincolor, // <-- SEE HERE
           ),
-          title: const Text('Order Details'),
+          foregroundColor: Palette.maincolor,
+          title: Text('Order Details'),
+          backgroundColor: Colors.white,
+          bottom: TabBar(
+              tabs: [
+                Tab(text: "customer"),
+                Tab(text: "Site"),
+                Tab(text: "Details"),
+                Tab(text: "Actions"),
+                Tab(text: "Logs"),
+              ],
+              labelColor: Palette.maincolor,
+              indicatorColor: Palette.maincolor,
+              unselectedLabelColor: Colors.black),
         ),
         body: TabBarView(
           children: [
@@ -221,15 +249,29 @@ class _OrderDetails extends State<OrderDetails> {
   }
 
   Widget LogWdiget() {
-    return ListView.builder(
-      itemCount: widget.order.activity.length,
-      itemBuilder: (context, index) {
-        return Container(
-          margin: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 15),
-          child: Text(widget.order.activity[index].comment,
-              style: TextStyle(fontSize: 16.0)),
-        );
-      },
+    return Container(
+      height: 200,
+      child: Stepper(
+        physics: ClampingScrollPhysics(),
+        controlsBuilder: (BuildContext context, ControlsDetails details) {
+          return Container();
+        },
+        onStepTapped: (pos) {
+          setState(() {
+            _currentStep = pos;
+          });
+        },
+        steps: <Step>[
+          for (int i = 0; i < widget.order.activity.length; i++)
+            Step(
+              isActive: true,
+              state: StepState.complete,
+              title: FxText.bodyLarge(widget.order.activity[i].comment,
+                  fontWeight: 600),
+              content: Container(),
+            ),
+        ],
+      ),
     );
   }
 

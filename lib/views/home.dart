@@ -53,18 +53,6 @@ class _Home extends State<Home> {
                   children: [
                     FxSpacing.height(16),
                     FxText.titleMedium(
-                      'My Orders',
-                      letterSpacing: 0.5,
-                      fontWeight: 700,
-                    ),
-                    FxSpacing.height(16),
-                    Container(
-                        child: posts(
-                      isLoading: homeController.isLoading.value,
-                      orders: homeController.orders,
-                    )),
-                    FxSpacing.height(24),
-                    FxText.titleMedium(
                       'New Orders',
                       letterSpacing: 0.5,
                       fontWeight: 700,
@@ -83,6 +71,26 @@ class _Home extends State<Home> {
                                       fontWeight: 700),
                                 ),
                               )),
+                    FxText.titleMedium(
+                      'My Orders',
+                      letterSpacing: 0.5,
+                      fontWeight: 700,
+                    ),
+                    FxSpacing.height(16),
+                    Container(
+                        child: homeController.orders.isNotEmpty
+                            ? posts(
+                                isLoading: homeController.isLoading.value,
+                                orders: homeController.orders,
+                              )
+                            : Center(
+                                child: Container(
+                                  margin: FxSpacing.top(8),
+                                  child: FxText.titleMedium("No Result!",
+                                      fontWeight: 700),
+                                ),
+                              )),
+                    FxSpacing.height(24),
                   ],
                 ),
               ),
@@ -128,7 +136,7 @@ class _Home extends State<Home> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   FxText.bodyMedium(
-                                    orders[index].date.weekday.toString(),
+                                    "${orders[index].date.weekday}/${orders[index].date.month}",
                                     fontWeight: 700,
                                   ),
                                   FxText.bodySmall(
