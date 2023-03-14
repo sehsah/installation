@@ -22,6 +22,8 @@ class _Home extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print("loading ${homeController.isLoading.value}");
+
     return Obx(() {
       return Scaffold(
           resizeToAvoidBottomInset: true,
@@ -59,18 +61,10 @@ class _Home extends State<Home> {
                     ),
                     FxSpacing.height(16),
                     Container(
-                        child: homeController.orders2.isNotEmpty
-                            ? posts(
-                                isLoading: homeController.isLoading.value,
-                                orders: homeController.orders2,
-                              )
-                            : Center(
-                                child: Container(
-                                  margin: FxSpacing.top(8),
-                                  child: FxText.titleMedium("No Result!",
-                                      fontWeight: 700),
-                                ),
-                              )),
+                        child: posts(
+                      isLoading: homeController.isLoading.value,
+                      orders: homeController.orders2,
+                    )),
                     FxText.titleMedium(
                       'My Orders',
                       letterSpacing: 0.5,
@@ -78,18 +72,10 @@ class _Home extends State<Home> {
                     ),
                     FxSpacing.height(16),
                     Container(
-                        child: homeController.orders.isNotEmpty
-                            ? posts(
-                                isLoading: homeController.isLoading.value,
-                                orders: homeController.orders,
-                              )
-                            : Center(
-                                child: Container(
-                                  margin: FxSpacing.top(8),
-                                  child: FxText.titleMedium("No Result!",
-                                      fontWeight: 700),
-                                ),
-                              )),
+                        child: posts(
+                      isLoading: homeController.isLoading.value,
+                      orders: homeController.orders,
+                    )),
                     FxSpacing.height(24),
                   ],
                 ),
@@ -104,7 +90,7 @@ class _Home extends State<Home> {
   }
 
   Widget posts({
-    required bool isLoading,
+    required isLoading,
     required List<Order> orders,
   }) {
     return isLoading == true

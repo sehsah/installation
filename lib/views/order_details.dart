@@ -21,7 +21,7 @@ class _OrderDetails extends State<OrderDetails>
     with SingleTickerProviderStateMixin {
   final authController = Get.put(AuthController());
   final homeController = Get.put(HomeController());
-  int _currentStep = 1;
+  int _currentStep = 0;
   TabController? _tabController;
   int _currentIndex = 0;
   late ThemeData theme;
@@ -51,7 +51,7 @@ class _OrderDetails extends State<OrderDetails>
       child: Scaffold(
         appBar: AppBar(
           iconTheme: IconThemeData(
-            color: Palette.maincolor, // <-- SEE HERE
+            color: Palette.maincolor,
           ),
           foregroundColor: Palette.maincolor,
           title: Text('Order Details'),
@@ -320,28 +320,30 @@ class _OrderDetails extends State<OrderDetails>
   Widget LogWdiget() {
     return Container(
       height: 200,
-      child: Stepper(
-        physics: ClampingScrollPhysics(),
-        controlsBuilder: (BuildContext context, ControlsDetails details) {
-          return Container();
-        },
-        currentStep: _currentStep,
-        onStepTapped: (pos) {
-          setState(() {
-            _currentStep = pos;
-          });
-        },
-        steps: <Step>[
-          for (int i = 0; i < widget.order.activity.length; i++)
-            Step(
-              isActive: true,
-              state: StepState.complete,
-              title: FxText.bodyLarge(widget.order.activity[i].comment,
-                  fontWeight: 600),
-              content: Container(),
-            ),
-        ],
-      ),
+      child: widget.order.activity.isNotEmpty
+          ? Stepper(
+              physics: ClampingScrollPhysics(),
+              controlsBuilder: (BuildContext context, ControlsDetails details) {
+                return Container();
+              },
+              // currentStep: _currentStep,
+              // onStepTapped: (pos) {
+              //   setState(() {
+              //     _currentStep = pos;
+              //   });
+              // },
+              steps: <Step>[
+                for (int i = 0; i < widget.order.activity.length; i++)
+                  Step(
+                    isActive: true,
+                    state: StepState.complete,
+                    title: FxText.bodyLarge(widget.order.activity[i].comment,
+                        fontWeight: 600),
+                    content: Container(),
+                  ),
+              ],
+            )
+          : Container(),
     );
   }
 

@@ -4,10 +4,9 @@ import 'package:installation/responses/order_response.dart';
 import 'package:installation/services/api.dart';
 
 class HomeController extends GetxController {
-  var isLoading = true.obs;
+  RxBool isLoading = true.obs;
   RxList<Order> orders = <Order>[].obs;
   RxList<Order> orders2 = <Order>[].obs;
-  var isDisabled = true.obs;
 
   @override
   void onInit() {
