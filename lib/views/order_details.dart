@@ -1,13 +1,19 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutx/flutx.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/models/order.dart';
 import 'package:installation/theme/app_theme.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:image_picker/image_picker.dart';
 
 class OrderDetails extends StatefulWidget {
   final Order order;
@@ -21,13 +27,26 @@ class _OrderDetails extends State<OrderDetails>
     with SingleTickerProviderStateMixin {
   final authController = Get.put(AuthController());
   final homeController = Get.put(HomeController());
-  int _currentStep = 0;
+  late bool consumption_meter, industrial_socket, isolator;
   TabController? _tabController;
   int _currentIndex = 0;
   late ThemeData theme;
+  File? image;
+  File? image2;
+  File? image3;
+  String cable_type = "63";
+  String breaker = "S32";
+  final _commentController = TextEditingController();
+  final _cable_lengthController = TextEditingController();
+  final _pvc_lengthController = TextEditingController();
+  final Map<String, dynamic> _ActionData = {};
+
   @override
   void initState() {
     theme = AppTheme.theme;
+    consumption_meter = false;
+    industrial_socket = false;
+    isolator = false;
     _tabController = TabController(length: 2, vsync: this);
     _tabController!.animation!.addListener(() {
       final aniValue = _tabController!.animation!.value;
@@ -42,6 +61,105 @@ class _OrderDetails extends State<OrderDetails>
       }
     });
     super.initState();
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItemsBreaker {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(value: "S32", child: Text("Single Phase 32A")),
+      DropdownMenuItem(value: "S40", child: Text("Single Phase 40A")),
+      DropdownMenuItem(value: "T40", child: Text("Three Phases 40A")),
+      DropdownMenuItem(value: "T63", child: Text("Three Phases 63A")),
+    ];
+    return menuItems;
+  }
+
+  List<DropdownMenuItem<String>> get dropdownItemsCableType {
+    List<DropdownMenuItem<String>> menuItems2 = [
+      DropdownMenuItem(value: "63", child: Text("6.0mm 3-Core")),
+      DropdownMenuItem(value: "10-3", child: Text("10.0mm 3-Core")),
+      DropdownMenuItem(value: "6-3", child: Text("6.0mm 5-Core")),
+      DropdownMenuItem(value: "10-3", child: Text("10.0mm 5-Core")),
+    ];
+    return menuItems2;
+  }
+
+  Future<void> _showChoiceDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "choose_option",
+              style: TextStyle(color: Colors.blue),
+            ),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  Divider(
+                    height: 1,
+                    color: Colors.blue,
+                  ),
+                  ListTile(
+                    onTap: () {
+                      _openImagePicker(context);
+                    },
+                    title: Text(
+                      "gallery",
+                    ),
+                    leading: Icon(
+                      Icons.account_box,
+                      color: Colors.blue,
+                    ),
+                  ),
+                  Divider(
+                    height: 1,
+                    color: Colors.blue,
+                  ),
+                  ListTile(
+                    onTap: () {
+                      _openCamera(context);
+                    },
+                    title: Text(
+                      "camera",
+                    ),
+                    leading: Icon(
+                      Icons.camera,
+                      color: Colors.blue,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future<void> _openImagePicker(BuildContext context) async {
+    try {
+      final pickedFile = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+      );
+      setState(() {
+        image = File(pickedFile!.path);
+      });
+
+      Navigator.pop(context);
+    } on PlatformException catch (e) {
+      print('faild ${e}');
+    }
+  }
+
+  void _openCamera(BuildContext context) async {
+    try {
+      final pickedFile =
+          await ImagePicker().pickImage(source: ImageSource.camera);
+      setState(() {
+        image = File(pickedFile!.path);
+      });
+      Navigator.pop(context);
+    } on PlatformException catch (e) {
+      print('faild ${e}');
+    }
   }
 
   @override
@@ -226,14 +344,14 @@ class _OrderDetails extends State<OrderDetails>
   Widget ActionsWdiget() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          ListView(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            padding: FxSpacing.nTop(20),
-            children: <Widget>[
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               TextFormField(
+                controller: _commentController,
                 decoration: InputDecoration(
                   labelText: "Comment",
                   border: theme.inputDecorationTheme.border,
@@ -245,8 +363,9 @@ class _OrderDetails extends State<OrderDetails>
                   ? Container(
                       margin: EdgeInsets.only(top: 8),
                       child: TextFormField(
+                        controller: _cable_lengthController,
                         decoration: InputDecoration(
-                          labelText: "Address 2",
+                          labelText: "Cable Length",
                           border: theme.inputDecorationTheme.border,
                           enabledBorder: theme.inputDecorationTheme.border,
                           focusedBorder:
@@ -259,8 +378,9 @@ class _OrderDetails extends State<OrderDetails>
                   ? Container(
                       margin: EdgeInsets.only(top: 8),
                       child: TextFormField(
+                        controller: _pvc_lengthController,
                         decoration: InputDecoration(
-                          labelText: "Contact",
+                          labelText: "PVC Trunking Length",
                           border: theme.inputDecorationTheme.border,
                           enabledBorder: theme.inputDecorationTheme.border,
                           focusedBorder:
@@ -269,16 +389,224 @@ class _OrderDetails extends State<OrderDetails>
                       ),
                     )
                   : Container(),
+              FxSpacing.height(10),
+              widget.order.status == 'CONTACTED'
+                  ? DropdownButton(
+                      isExpanded: true,
+                      value: cable_type,
+                      items: dropdownItemsCableType,
+                      onChanged: (value) {
+                        setState(() {
+                          cable_type = value!;
+                        });
+                      },
+                    )
+                  : Container(),
+              FxSpacing.height(10),
+              widget.order.status == 'CONTACTED'
+                  ? DropdownButton(
+                      isExpanded: true,
+                      value: breaker,
+                      items: dropdownItemsBreaker,
+                      onChanged: (value) {
+                        setState(() {
+                          breaker = value!;
+                        });
+                      },
+                    )
+                  : Container(),
+              FxSpacing.height(10),
+              widget.order.status == 'CONTACTED'
+                  ? SwitchListTile(
+                      activeColor: Palette.maincolor,
+                      dense: true,
+                      contentPadding: FxSpacing.zero,
+                      title: FxText.bodyMedium(
+                        "Consumption Meter",
+                        letterSpacing: 0,
+                      ),
+                      onChanged: (val) {
+                        setState(() {
+                          consumption_meter == false
+                              ? consumption_meter = true
+                              : consumption_meter = false;
+                        });
+                      },
+                      value: consumption_meter,
+                    )
+                  : Container(),
+              widget.order.status == 'CONTACTED'
+                  ? SwitchListTile(
+                      activeColor: Palette.maincolor,
+                      dense: true,
+                      contentPadding: FxSpacing.zero,
+                      title: FxText.bodyMedium(
+                        "Industrial Socket",
+                        letterSpacing: 0,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          industrial_socket == false
+                              ? industrial_socket = true
+                              : industrial_socket = false;
+                        });
+                      },
+                      value: industrial_socket,
+                    )
+                  : Container(),
+              widget.order.status == 'CONTACTED'
+                  ? SwitchListTile(
+                      activeColor: Palette.maincolor,
+                      dense: true,
+                      contentPadding: FxSpacing.zero,
+                      title: FxText.bodyMedium(
+                        "Isolator",
+                        letterSpacing: 0,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          isolator == false
+                              ? isolator = true
+                              : isolator = false;
+                        });
+                      },
+                      value: isolator,
+                    )
+                  : Container(),
               widget.order.status == 'CONTACTED'
                   ? Container(
-                      margin: EdgeInsets.only(top: 8),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Delivery note",
-                          border: theme.inputDecorationTheme.border,
-                          enabledBorder: theme.inputDecorationTheme.border,
-                          focusedBorder:
-                              theme.inputDecorationTheme.focusedBorder,
+                      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                      child: GFBorder(
+                        radius: Radius.circular(20),
+                        color: Palette.maincolor,
+                        dashedLine: [3, 0],
+                        child: InkWell(
+                          onTap: () => _showChoiceDialog(context),
+                          child: image == null
+                              ? Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 100,
+                                  color: Palette.maincolor,
+                                  child: Center(
+                                      child: GFButton(
+                                    textColor: Colors.white,
+                                    onPressed: null,
+                                    color: Palette.maincolor,
+                                    textStyle: TextStyle(
+                                      fontSize: 13,
+                                      fontFamily:
+                                          GetStorage().read('Lang') == 'en'
+                                              ? 'OpenSans'
+                                              : 'Almarai',
+                                    ),
+                                    text: "Upload File",
+                                    icon: Icon(
+                                      Icons.upload,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                                )
+                              : InkWell(
+                                  onTap: () => _showChoiceDialog(context),
+                                  child: Image.file(
+                                    image!,
+                                    width: 100.0,
+                                    height: 100.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              widget.order.status == 'CONTACTED'
+                  ? Container(
+                      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                      child: GFBorder(
+                        radius: Radius.circular(20),
+                        color: Palette.maincolor,
+                        dashedLine: [3, 0],
+                        child: InkWell(
+                          onTap: () => _showChoiceDialog(context),
+                          child: image2 == null
+                              ? Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 100,
+                                  color: Palette.maincolor,
+                                  child: Center(
+                                      child: GFButton(
+                                    textColor: Colors.white,
+                                    onPressed: null,
+                                    color: Palette.maincolor,
+                                    textStyle: TextStyle(
+                                      fontSize: 13,
+                                      fontFamily:
+                                          GetStorage().read('Lang') == 'en'
+                                              ? 'OpenSans'
+                                              : 'Almarai',
+                                    ),
+                                    text: "Upload File",
+                                    icon: Icon(
+                                      Icons.upload,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                                )
+                              : InkWell(
+                                  onTap: () => _showChoiceDialog(context),
+                                  child: Image.file(
+                                    image!,
+                                    width: 100.0,
+                                    height: 100.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    )
+                  : Container(),
+              widget.order.status == 'CONTACTED'
+                  ? Container(
+                      margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                      child: GFBorder(
+                        radius: Radius.circular(20),
+                        color: Palette.maincolor,
+                        dashedLine: [3, 0],
+                        child: InkWell(
+                          onTap: () => _showChoiceDialog(context),
+                          child: image3 == null
+                              ? Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 100,
+                                  color: Palette.maincolor,
+                                  child: Center(
+                                      child: GFButton(
+                                    textColor: Colors.white,
+                                    onPressed: null,
+                                    color: Palette.maincolor,
+                                    textStyle: TextStyle(
+                                      fontSize: 13,
+                                      fontFamily:
+                                          GetStorage().read('Lang') == 'en'
+                                              ? 'OpenSans'
+                                              : 'Almarai',
+                                    ),
+                                    text: "Upload File",
+                                    icon: Icon(
+                                      Icons.upload,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                                )
+                              : InkWell(
+                                  onTap: () => _showChoiceDialog(context),
+                                  child: Image.file(
+                                    image!,
+                                    width: 100.0,
+                                    height: 100.0,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                         ),
                       ),
                     )
@@ -298,7 +626,20 @@ class _OrderDetails extends State<OrderDetails>
                     ],
                   ),
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        _ActionData['comment'] = _commentController.text;
+                        _ActionData['cable_length'] =
+                            _cable_lengthController.text;
+                        _ActionData['pvc_length'] = _pvc_lengthController.text;
+                        _ActionData['cable_type'] = cable_type;
+                        _ActionData['breaker'] = breaker;
+                        _ActionData['consumption_meter'] = consumption_meter;
+                        _ActionData['industrial_socket'] = industrial_socket;
+                        _ActionData['isolator'] = isolator;
+                        _ActionData['image1'] =
+                            "data:image/png;base64,${base64Encode(image!.readAsBytesSync())}";
+                        print(_ActionData);
+                      },
                       style: ButtonStyle(
                           backgroundColor:
                               MaterialStateProperty.all(Palette.maincolor),
@@ -309,10 +650,10 @@ class _OrderDetails extends State<OrderDetails>
                           letterSpacing: 0.2,
                           color: Colors.white)),
                 ),
-              )
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
