@@ -5,6 +5,8 @@ import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/models/order.dart';
+import 'package:installation/theme/app_theme.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -22,9 +24,10 @@ class _OrderDetails extends State<OrderDetails>
   int _currentStep = 1;
   TabController? _tabController;
   int _currentIndex = 0;
-
+  late ThemeData theme;
   @override
   void initState() {
+    theme = AppTheme.theme;
     _tabController = TabController(length: 2, vsync: this);
     _tabController!.animation!.addListener(() {
       final aniValue = _tabController!.animation!.value;
@@ -225,23 +228,89 @@ class _OrderDetails extends State<OrderDetails>
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          TextFormField(
-            decoration: const InputDecoration(
-              border: UnderlineInputBorder(),
-              labelText: 'Enter your Comment',
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            margin:
-                EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15, right: 15),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Palette.maincolor, // Background color
+          ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            padding: FxSpacing.nTop(20),
+            children: <Widget>[
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: "Comment",
+                  border: theme.inputDecorationTheme.border,
+                  enabledBorder: theme.inputDecorationTheme.border,
+                  focusedBorder: theme.inputDecorationTheme.focusedBorder,
+                ),
               ),
-              onPressed: () => _openMaps(),
-              child: Text('Update'),
-            ),
+              widget.order.status == 'CONTACTED'
+                  ? Container(
+                      margin: EdgeInsets.only(top: 8),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Address 2",
+                          border: theme.inputDecorationTheme.border,
+                          enabledBorder: theme.inputDecorationTheme.border,
+                          focusedBorder:
+                              theme.inputDecorationTheme.focusedBorder,
+                        ),
+                      ),
+                    )
+                  : Container(),
+              widget.order.status == 'CONTACTED'
+                  ? Container(
+                      margin: EdgeInsets.only(top: 8),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Contact",
+                          border: theme.inputDecorationTheme.border,
+                          enabledBorder: theme.inputDecorationTheme.border,
+                          focusedBorder:
+                              theme.inputDecorationTheme.focusedBorder,
+                        ),
+                      ),
+                    )
+                  : Container(),
+              widget.order.status == 'CONTACTED'
+                  ? Container(
+                      margin: EdgeInsets.only(top: 8),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: "Delivery note",
+                          border: theme.inputDecorationTheme.border,
+                          enabledBorder: theme.inputDecorationTheme.border,
+                          focusedBorder:
+                              theme.inputDecorationTheme.focusedBorder,
+                        ),
+                      ),
+                    )
+                  : Container(),
+              Container(
+                margin: EdgeInsets.only(top: 16),
+                alignment: Alignment.center,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.primary.withAlpha(28),
+                        blurRadius: 4,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Palette.maincolor),
+                          padding:
+                              MaterialStateProperty.all(FxSpacing.xy(16, 0))),
+                      child: FxText.bodyMedium("Update",
+                          fontWeight: 700,
+                          letterSpacing: 0.2,
+                          color: Colors.white)),
+                ),
+              )
+            ],
           ),
         ],
       ),
@@ -256,6 +325,7 @@ class _OrderDetails extends State<OrderDetails>
         controlsBuilder: (BuildContext context, ControlsDetails details) {
           return Container();
         },
+        currentStep: _currentStep,
         onStepTapped: (pos) {
           setState(() {
             _currentStep = pos;
