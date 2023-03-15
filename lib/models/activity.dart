@@ -4,6 +4,8 @@ class Activity {
   late String image1;
   late String image2;
   late String image3;
+  late String name;
+  late String date;
   late int cableLength;
   late int pvcLength;
   late String cableType;
@@ -19,6 +21,8 @@ class Activity {
     image2 = json['image2'];
     image3 = json['image3'];
     cableLength = json['cable_length'];
+    name = json['user'];
+    date = json['date'];
     pvcLength = json['pvc_length'];
     cableType = json['cable_type'];
     breaker = json['breaker'];

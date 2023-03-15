@@ -12,6 +12,7 @@ import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/models/order.dart';
 import 'package:installation/theme/app_theme.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -30,6 +31,7 @@ class _OrderDetails extends State<OrderDetails>
   late bool consumption_meter, industrial_socket, isolator;
   TabController? _tabController;
   int _currentIndex = 0;
+  int _currentStep = 3;
   late ThemeData theme;
   File? image;
   File? image2;
@@ -89,7 +91,7 @@ class _OrderDetails extends State<OrderDetails>
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              "choose_option",
+              "Selecte Option",
               style: TextStyle(color: Colors.blue),
             ),
             content: SingleChildScrollView(
@@ -306,7 +308,7 @@ class _OrderDetails extends State<OrderDetails>
         ),
         Container(
           margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-          child: Text("Work Order	 : ${widget.order.site!.name}",
+          child: Text("Work Order	 : ${widget.order.work_name}",
               style: TextStyle(fontSize: 16.0)),
         ),
         Container(
@@ -319,7 +321,8 @@ class _OrderDetails extends State<OrderDetails>
                 style: TextStyle(fontSize: 16.0))),
         Container(
             margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Preferred Date:  ${widget.order.date}",
+            child: Text(
+                "Preferred Date:  ${widget.order.date!.weekday}/${widget.order.date!.month}/${widget.order.date!.year}",
                 style: TextStyle(fontSize: 16.0))),
         Container(
             margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
@@ -359,10 +362,11 @@ class _OrderDetails extends State<OrderDetails>
                   focusedBorder: theme.inputDecorationTheme.focusedBorder,
                 ),
               ),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? Container(
                       margin: EdgeInsets.only(top: 8),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _cable_lengthController,
                         decoration: InputDecoration(
                           labelText: "Cable Length",
@@ -374,10 +378,11 @@ class _OrderDetails extends State<OrderDetails>
                       ),
                     )
                   : Container(),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? Container(
                       margin: EdgeInsets.only(top: 8),
                       child: TextFormField(
+                        keyboardType: TextInputType.number,
                         controller: _pvc_lengthController,
                         decoration: InputDecoration(
                           labelText: "PVC Trunking Length",
@@ -390,7 +395,7 @@ class _OrderDetails extends State<OrderDetails>
                     )
                   : Container(),
               FxSpacing.height(10),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? DropdownButton(
                       isExpanded: true,
                       value: cable_type,
@@ -403,7 +408,7 @@ class _OrderDetails extends State<OrderDetails>
                     )
                   : Container(),
               FxSpacing.height(10),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? DropdownButton(
                       isExpanded: true,
                       value: breaker,
@@ -416,7 +421,7 @@ class _OrderDetails extends State<OrderDetails>
                     )
                   : Container(),
               FxSpacing.height(10),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? SwitchListTile(
                       activeColor: Palette.maincolor,
                       dense: true,
@@ -435,7 +440,7 @@ class _OrderDetails extends State<OrderDetails>
                       value: consumption_meter,
                     )
                   : Container(),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? SwitchListTile(
                       activeColor: Palette.maincolor,
                       dense: true,
@@ -454,7 +459,7 @@ class _OrderDetails extends State<OrderDetails>
                       value: industrial_socket,
                     )
                   : Container(),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? SwitchListTile(
                       activeColor: Palette.maincolor,
                       dense: true,
@@ -473,7 +478,7 @@ class _OrderDetails extends State<OrderDetails>
                       value: isolator,
                     )
                   : Container(),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? Container(
                       margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                       child: GFBorder(
@@ -519,7 +524,7 @@ class _OrderDetails extends State<OrderDetails>
                       ),
                     )
                   : Container(),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? Container(
                       margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                       child: GFBorder(
@@ -565,7 +570,7 @@ class _OrderDetails extends State<OrderDetails>
                       ),
                     )
                   : Container(),
-              widget.order.status == 'CONTACTED'
+              widget.order.status == 'Customer Contacted'
                   ? Container(
                       margin: EdgeInsets.symmetric(horizontal: 0, vertical: 10),
                       child: GFBorder(
@@ -633,12 +638,23 @@ class _OrderDetails extends State<OrderDetails>
                         _ActionData['pvc_length'] = _pvc_lengthController.text;
                         _ActionData['cable_type'] = cable_type;
                         _ActionData['breaker'] = breaker;
-                        _ActionData['consumption_meter'] = consumption_meter;
-                        _ActionData['industrial_socket'] = industrial_socket;
-                        _ActionData['isolator'] = isolator;
-                        _ActionData['image1'] =
-                            "data:image/png;base64,${base64Encode(image!.readAsBytesSync())}";
-                        print(_ActionData);
+                        _ActionData['consumption_meter'] =
+                            consumption_meter == false ? 0 : 1;
+                        _ActionData['industrial_socket'] =
+                            industrial_socket == false ? 0 : 1;
+                        _ActionData['isolator'] = isolator == false ? 0 : 1;
+
+                        _ActionData['image1'] = image != null
+                            ? "data:image/png;base64,${base64Encode(image!.readAsBytesSync())}"
+                            : "";
+                        _ActionData['image2'] = image2 != null
+                            ? "data:image/png;base64,${base64Encode(image2!.readAsBytesSync())}"
+                            : "";
+                        _ActionData['image3'] = image3 != null
+                            ? "data:image/png;base64,${base64Encode(image3!.readAsBytesSync())}"
+                            : "";
+                        homeController.addLog(
+                            Data: _ActionData, context: context);
                       },
                       style: ButtonStyle(
                           backgroundColor:
@@ -667,12 +683,12 @@ class _OrderDetails extends State<OrderDetails>
               controlsBuilder: (BuildContext context, ControlsDetails details) {
                 return Container();
               },
-              // currentStep: _currentStep,
-              // onStepTapped: (pos) {
-              //   setState(() {
-              //     _currentStep = pos;
-              //   });
-              // },
+              currentStep: _currentStep,
+              onStepTapped: (pos) {
+                setState(() {
+                  _currentStep = pos;
+                });
+              },
               steps: <Step>[
                 for (int i = 0; i < widget.order.activity.length; i++)
                   Step(
@@ -680,7 +696,16 @@ class _OrderDetails extends State<OrderDetails>
                     state: StepState.complete,
                     title: FxText.bodyLarge(widget.order.activity[i].comment,
                         fontWeight: 600),
-                    content: Container(),
+                    content: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(MdiIcons.account, size: 24),
+                        FxSpacing.width(10),
+                        FxText.bodyMedium(
+                            "${widget.order.activity[i].name} add log at : ${widget.order.activity[i].date}",
+                            fontWeight: 400)
+                      ],
+                    ),
                   ),
               ],
             )

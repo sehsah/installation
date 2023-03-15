@@ -122,12 +122,12 @@ class _Home extends State<Home> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   FxText.bodyMedium(
-                                    "${orders[index].date.weekday}/${orders[index].date.month}",
+                                    "${orders[index].date!.weekday}/${orders[index].date!.month}",
                                     fontWeight: 700,
                                   ),
                                   FxText.bodySmall(
                                     DateFormat('EEE')
-                                        .format(orders[index].date),
+                                        .format(orders[index].date!),
                                     fontWeight: 600,
                                   ),
                                 ],

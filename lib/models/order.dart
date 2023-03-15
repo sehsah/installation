@@ -7,12 +7,13 @@ class Order {
   late List<Order> data;
   late bool state;
   late int id;
+  late String work_name;
   late Agent? agent;
   late Customer? customer;
   late Site site;
-  late DateTime date;
+  late DateTime? date;
   late String time;
-  late int connectionType;
+  late String connectionType;
   late int connectionNumber;
   late String charger;
   late String status;
@@ -27,11 +28,12 @@ class Order {
     }
 
     id = json['id'];
+    work_name = json['work_name'];
     agent = json['agent'] != null ? Agent.fromJson(json['agent']) : null;
     customer =
         json['customer'] != null ? Customer.fromJson(json['customer']) : null;
     site = (json['site'] != null ? Site.fromJson(json['site']) : null)!;
-    date = DateTime.tryParse(json['date'])!;
+    date = DateTime.tryParse(json['date']);
     time = json['time'];
     connectionType = json['connection_type'];
     connectionNumber = json['connection_number'];

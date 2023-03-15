@@ -129,4 +129,12 @@ class Api {
   static Future<Response> OrderDetails(id) async {
     return dio.get('/order/${id}');
   }
+
+  static Future<Response> addLog({required Map<String, dynamic> Data}) async {
+    initializeInterceptors();
+    FormData formData = FormData.fromMap(Data);
+    print(Data);
+
+    return dio.post('/add/log', data: formData);
+  }
 } //end of api
