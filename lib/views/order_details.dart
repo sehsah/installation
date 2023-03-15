@@ -10,6 +10,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
+import 'package:installation/models/activity.dart';
 import 'package:installation/models/order.dart';
 import 'package:installation/theme/app_theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -31,7 +32,7 @@ class _OrderDetails extends State<OrderDetails>
   late bool consumption_meter, industrial_socket, isolator;
   TabController? _tabController;
   int _currentIndex = 0;
-  int _currentStep = 3;
+  late int _currentStep = 0;
   late ThemeData theme;
   File? image;
   File? image2;
@@ -85,7 +86,7 @@ class _OrderDetails extends State<OrderDetails>
     return menuItems2;
   }
 
-  Future<void> _showChoiceDialog(BuildContext context) {
+  Future<void> _showChoiceDialog(BuildContext context, nameImg) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -103,7 +104,7 @@ class _OrderDetails extends State<OrderDetails>
                   ),
                   ListTile(
                     onTap: () {
-                      _openImagePicker(context);
+                      _openImagePicker(context, nameImg);
                     },
                     title: Text(
                       "gallery",
@@ -136,13 +137,13 @@ class _OrderDetails extends State<OrderDetails>
         });
   }
 
-  Future<void> _openImagePicker(BuildContext context) async {
+  Future<void> _openImagePicker(BuildContext context, nameImg) async {
     try {
       final pickedFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
       );
       setState(() {
-        image = File(pickedFile!.path);
+        nameImg = File(pickedFile!.path);
       });
 
       Navigator.pop(context);
@@ -192,7 +193,6 @@ class _OrderDetails extends State<OrderDetails>
           children: [
             Container(
                 width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
                 child: customerWdiget()),
             Container(
                 width: MediaQuery.of(context).size.width,
@@ -226,22 +226,114 @@ class _OrderDetails extends State<OrderDetails>
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-          child: Text("First Name : ${widget.order.customer!.firstName}",
-              style: TextStyle(fontSize: 16.0)),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          color: Colors.grey[200],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("First Name :",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text(widget.order.customer!.firstName,
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
         ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Last Name :  ${widget.order.customer!.lastName}",
-                style: TextStyle(fontSize: 16.0))),
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Last Name : ",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(widget.order.customer!.lastName,
+                      style: TextStyle(fontSize: 16.0)),
+                ],
+              ),
+            )),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Mobile Number :  ${widget.order.customer!.phone}",
-                style: TextStyle(fontSize: 16.0))),
+            color: Colors.grey[200],
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Mobile Number :",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(widget.order.customer!.phone,
+                      style: TextStyle(fontSize: 16.0))
+                ],
+              ),
+            )),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Email Address :  ${widget.order.customer!.email}",
-                style: TextStyle(fontSize: 16.0))),
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Email Address :",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(widget.order.customer!.email,
+                      style: TextStyle(fontSize: 16.0))
+                ],
+              ),
+            )),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+          child: Row(
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Palette.maincolor, // Background color
+                ),
+                onPressed: () => _openMaps(),
+                child: Row(
+                  children: [
+                    Icon(MdiIcons.phone, size: 20),
+                    FxSpacing.width(5),
+                    Text('Call Phone '),
+                  ],
+                ),
+              ),
+              Spacer(),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Palette.maincolor, // Background color
+                ),
+                onPressed: () => _openMaps(),
+                child: Row(
+                  children: [
+                    Icon(MdiIcons.whatsapp, size: 20),
+                    FxSpacing.width(5),
+                    Text('Chat With whatapp '),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -256,32 +348,121 @@ class _OrderDetails extends State<OrderDetails>
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-          child: Text("Site Name	 : ${widget.order.site!.name}",
-              style: TextStyle(fontSize: 16.0)),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          color: Colors.grey[200],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Site Name : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text(widget.order.site.name, style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
         ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text(
-                "Apartment Number	 :  ${widget.order.site!.apartmentNumber}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Apartment Number : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text("${widget.order.site.apartmentNumber}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Street Name :  ${widget.order.site!.street}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          color: Colors.grey[200],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Street Name : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text("${widget.order.site.street}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text(
-                "Additional Direction	 :  ${widget.order.site!.additionalDirection}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Additional Direction : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text("${widget.order.site.additionalDirection}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("City:  ${widget.order.site!.city}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          color: Colors.grey[200],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("City : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text("${widget.order.site.city}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Country:  ${widget.order.site!.country}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Country : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text("${widget.order.site.country}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
           width: MediaQuery.of(context).size.width,
           margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15, right: 15),
@@ -307,39 +488,160 @@ class _OrderDetails extends State<OrderDetails>
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-          child: Text("Work Order	 : ${widget.order.work_name}",
-              style: TextStyle(fontSize: 16.0)),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          color: Colors.grey[200],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Work Order : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text("${widget.order.work_name}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
         ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Work Order Status:  ${widget.order.status}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Work Order Status : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text("${widget.order.status}", style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Assigned To:  ${widget.order.agent?.firstName}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          color: Colors.grey[200],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Assigned To: ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text("${widget.order.agent?.firstName}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text(
-                "Preferred Date:  ${widget.order.date!.weekday}/${widget.order.date!.month}/${widget.order.date!.year}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Preferred Date : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text(
+                    "${widget.order.date!.weekday}/${widget.order.date!.month}/${widget.order.date!.year}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Preferred Time	:  ${widget.order.time}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          color: Colors.grey[200],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Preferred Time : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text(" ${widget.order.time}", style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Connection Type	:  ${widget.order.connectionType}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Connection Type : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text(" ${widget.order.connectionType}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Connection Number	:  ${widget.order.connectionNumber}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          color: Colors.grey[200],
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Connection Number : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text(" ${widget.order.connectionNumber}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
         Container(
-            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15),
-            child: Text("Charger:  ${widget.order.charger}",
-                style: TextStyle(fontSize: 16.0))),
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: 5, top: 10),
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Text("Charger : ",
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w500)),
+                ),
+                Text(" ${widget.order.charger}",
+                    style: TextStyle(fontSize: 16.0))
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -486,7 +788,7 @@ class _OrderDetails extends State<OrderDetails>
                         color: Palette.maincolor,
                         dashedLine: [3, 0],
                         child: InkWell(
-                          onTap: () => _showChoiceDialog(context),
+                          onTap: () => _showChoiceDialog(context, image),
                           child: image == null
                               ? Container(
                                   width: MediaQuery.of(context).size.width,
@@ -497,13 +799,6 @@ class _OrderDetails extends State<OrderDetails>
                                     textColor: Colors.white,
                                     onPressed: null,
                                     color: Palette.maincolor,
-                                    textStyle: TextStyle(
-                                      fontSize: 13,
-                                      fontFamily:
-                                          GetStorage().read('Lang') == 'en'
-                                              ? 'OpenSans'
-                                              : 'Almarai',
-                                    ),
                                     text: "Upload File",
                                     icon: Icon(
                                       Icons.upload,
@@ -512,7 +807,8 @@ class _OrderDetails extends State<OrderDetails>
                                   )),
                                 )
                               : InkWell(
-                                  onTap: () => _showChoiceDialog(context),
+                                  onTap: () =>
+                                      _showChoiceDialog(context, image),
                                   child: Image.file(
                                     image!,
                                     width: 100.0,
@@ -532,7 +828,7 @@ class _OrderDetails extends State<OrderDetails>
                         color: Palette.maincolor,
                         dashedLine: [3, 0],
                         child: InkWell(
-                          onTap: () => _showChoiceDialog(context),
+                          onTap: () => _showChoiceDialog(context, image2),
                           child: image2 == null
                               ? Container(
                                   width: MediaQuery.of(context).size.width,
@@ -543,13 +839,6 @@ class _OrderDetails extends State<OrderDetails>
                                     textColor: Colors.white,
                                     onPressed: null,
                                     color: Palette.maincolor,
-                                    textStyle: TextStyle(
-                                      fontSize: 13,
-                                      fontFamily:
-                                          GetStorage().read('Lang') == 'en'
-                                              ? 'OpenSans'
-                                              : 'Almarai',
-                                    ),
                                     text: "Upload File",
                                     icon: Icon(
                                       Icons.upload,
@@ -558,7 +847,8 @@ class _OrderDetails extends State<OrderDetails>
                                   )),
                                 )
                               : InkWell(
-                                  onTap: () => _showChoiceDialog(context),
+                                  onTap: () =>
+                                      _showChoiceDialog(context, image2),
                                   child: Image.file(
                                     image!,
                                     width: 100.0,
@@ -578,7 +868,7 @@ class _OrderDetails extends State<OrderDetails>
                         color: Palette.maincolor,
                         dashedLine: [3, 0],
                         child: InkWell(
-                          onTap: () => _showChoiceDialog(context),
+                          onTap: () => _showChoiceDialog(context, image3),
                           child: image3 == null
                               ? Container(
                                   width: MediaQuery.of(context).size.width,
@@ -604,7 +894,8 @@ class _OrderDetails extends State<OrderDetails>
                                   )),
                                 )
                               : InkWell(
-                                  onTap: () => _showChoiceDialog(context),
+                                  onTap: () =>
+                                      _showChoiceDialog(context, image3),
                                   child: Image.file(
                                     image!,
                                     width: 100.0,
@@ -643,7 +934,9 @@ class _OrderDetails extends State<OrderDetails>
                         _ActionData['industrial_socket'] =
                             industrial_socket == false ? 0 : 1;
                         _ActionData['isolator'] = isolator == false ? 0 : 1;
-
+                        _ActionData['user_id'] =
+                            GetStorage().read('logged_user')['id'].toString();
+                        _ActionData['order_id'] = widget.order.id;
                         _ActionData['image1'] = image != null
                             ? "data:image/png;base64,${base64Encode(image!.readAsBytesSync())}"
                             : "";
@@ -653,6 +946,18 @@ class _OrderDetails extends State<OrderDetails>
                         _ActionData['image3'] = image3 != null
                             ? "data:image/png;base64,${base64Encode(image3!.readAsBytesSync())}"
                             : "";
+                        print(_ActionData);
+
+                        _commentController.clear();
+                        _pvc_lengthController.clear();
+                        cable_type = "null";
+                        breaker = "null";
+                        consumption_meter = false;
+                        industrial_socket = false;
+                        isolator = false;
+                        image = null;
+                        image2 = null;
+                        image3 = null;
                         homeController.addLog(
                             Data: _ActionData, context: context);
                       },

@@ -5,7 +5,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/models/order.dart';
+import 'package:installation/views/notification.dart';
 import 'package:installation/views/order_details.dart';
+import 'package:installation/views/profile.dart';
 import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
@@ -22,8 +24,6 @@ class _Home extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print("loading ${homeController.isLoading.value}");
-
     return Obx(() {
       return Scaffold(
           resizeToAvoidBottomInset: true,
@@ -36,12 +36,16 @@ class _Home extends State<Home> {
               IconButton(
                 icon: const Icon(Icons.notifications),
                 tooltip: 'Show Snackbar',
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(NotificationPage());
+                },
               ),
               IconButton(
                 icon: const Icon(Icons.person_sharp),
                 tooltip: 'Show Snackbar',
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(Profile());
+                },
               )
             ],
           ),

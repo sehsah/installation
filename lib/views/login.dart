@@ -1,12 +1,17 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutx/flutx.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:installation/theme/app_theme.dart';
+import 'package:installation/theme/custom_theme.dart';
 import 'package:installation/views/home.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Login extends StatefulWidget {
   static String tag = 'login-page';
@@ -22,92 +27,152 @@ class _LoginPageState extends State<Login> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _hidePassword = true;
   final Map<String, dynamic> _loginData = {};
+
+  bool _passwordVisible = false;
+
+  late CustomTheme customTheme;
+  late ThemeData theme;
+
+  @override
+  void initState() {
+    super.initState();
+    customTheme = AppTheme.customTheme;
+    theme = AppTheme.theme;
+  }
 
   @override
   Widget build(BuildContext context) {
-    Color myCustomColor =
-        Color(0xFF123456); // Replace with your custom color code
-
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
+        body: ListView(
+      padding: EdgeInsets.all(0),
+      children: <Widget>[
+        Container(
+          height: MediaQuery.of(context).size.height * 3 / 10,
+          child: Stack(
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 60.0),
-                child: Center(
-                  child: Container(
-                      width: 200,
-                      height: 150,
-                      child: Image.asset('assets/logo.jpeg')),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      hintText: 'Enter valid email id as abc@gmail.com'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 15.0, right: 15.0, top: 15, bottom: 0),
-                //padding: EdgeInsets.symmetric(horizontal: 15),
-                child: TextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      hintText: 'Enter secure password'),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 50,
-                width: 250,
-                decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(20)),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Palette.maincolor,
-                    onPrimary: Colors.white,
-                  ),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _loginData['email'] = _emailController.text;
-                      _loginData['password'] = _passwordController.text;
-                      authController.login(
-                          loginData: _loginData, context: context);
-                    }
-                  },
-                  child: Text(
-                    'Login',
-                    style: TextStyle(fontSize: 25),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 130,
-              ),
+              Positioned(
+                bottom: 20,
+                right: 40,
+                child: FxText.headlineSmall("LOGIN", fontWeight: 600),
+              )
             ],
           ),
         ),
-      ),
-    );
+        Container(
+          margin: EdgeInsets.only(left: 20, right: 20, top: 20),
+          child: FxContainer.bordered(
+            padding: EdgeInsets.only(top: 12, left: 20, right: 20, bottom: 12),
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: _emailController,
+                  style: FxTextStyle.bodyLarge(
+                      letterSpacing: 0.1, fontWeight: 500),
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    hintStyle: FxTextStyle.titleSmall(
+                        letterSpacing: 0.1, fontWeight: 500),
+                    prefixIcon: Icon(MdiIcons.emailOutline),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: TextFormField(
+                    controller: _passwordController,
+                    style: FxTextStyle.bodyLarge(
+                        letterSpacing: 0.1, fontWeight: 500),
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      hintStyle: FxTextStyle.titleSmall(
+                          letterSpacing: 0.1, fontWeight: 500),
+                      prefixIcon: Icon(MdiIcons.lockOutline),
+                      suffixIcon: IconButton(
+                        icon: Icon(_passwordVisible
+                            ? MdiIcons.eyeOutline
+                            : MdiIcons.eyeOffOutline),
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = _passwordVisible;
+                          });
+                        },
+                      ),
+                    ),
+                    obscureText: _passwordVisible,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  alignment: Alignment.centerRight,
+                  child: FxText.bodySmall("Forgot Password ?", fontWeight: 500),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: FxButton(
+                      backgroundColor: Palette.maincolor,
+                      elevation: 0,
+                      borderRadiusAll: 4,
+                      onPressed: () {
+                        if (_emailController.text == '' ||
+                            _passwordController.text == '') {
+                          GFToast.showToast(
+                            "Email and Password is Required",
+                            context,
+                            toastPosition: GFToastPosition.BOTTOM,
+                          );
+                        }
+                        _loginData['email'] = _emailController.text;
+                        _loginData['password'] = _passwordController.text;
+                        authController.login(
+                            loginData: _loginData, context: context);
+                      },
+                      child: FxText.labelMedium("LOGIN",
+                          fontWeight: 600,
+                          color: Colors.white,
+                          letterSpacing: 0.5)),
+                ),
+              ],
+            ),
+          ),
+        ),
+        // Container(
+        //   margin: EdgeInsets.only(top: 24),
+        //   child: Center(
+        //     child: FxText.bodyMedium("OR", fontWeight: 500),
+        //   ),
+        // ),
+        // Container(
+        //   margin: EdgeInsets.only(top: 20, bottom: 20),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: <Widget>[
+        //       FxContainer.rounded(
+        //           width: 52,
+        //           height: 52,
+        //           paddingAll: 0,
+        //           color: theme.colorScheme.primary,
+        //           child: Icon(
+        //             MdiIcons.facebook,
+        //             color: theme.colorScheme.onPrimary,
+        //             size: 30,
+        //           )),
+        //       SizedBox(
+        //         width: 20,
+        //       ),
+        //       FxContainer.rounded(
+        //           width: 52,
+        //           height: 52,
+        //           paddingAll: 0,
+        //           color: theme.colorScheme.primary,
+        //           child: Icon(
+        //             MdiIcons.google,
+        //             color: theme.colorScheme.onPrimary,
+        //             size: 30,
+        //           )),
+        //     ],
+        //   ),
+        // )
+      ],
+    ));
   }
 }

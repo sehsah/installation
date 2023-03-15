@@ -97,10 +97,9 @@ class Api {
   }
 
   static Future<Response> EditProfile(
-      {required Map<String, dynamic> editProfileData}) async {
-    initializeInterceptors();
-    FormData formData = FormData.fromMap(editProfileData);
-
+      {required Map<String, dynamic> Data}) async {
+    FormData formData = FormData.fromMap(Data);
+    print("formData ${formData}");
     return dio.post('/user/edit', data: formData);
   }
 

@@ -29,9 +29,15 @@ class HomeController extends GetxController with BaseController {
     isLoading.value = false;
   }
 
-  Future<void> addLog({required Map<String, dynamic> Data, context}) async {
+  Future<void> getOrderDetails(id) async {
+    var response = await Api.OrderDetails(id);
+    return response.data;
+  }
+
+  Future<void> addLog({required Data, context}) async {
     showLoading();
     var response = await Api.addLog(Data: Data);
+    await Api.OrderDetails(Data['order_id']);
     hideLoading();
     if (response.data['state'] == true) {
       _showDialog(context);

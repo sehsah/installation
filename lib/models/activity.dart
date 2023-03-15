@@ -11,7 +11,7 @@ class Activity {
   late String cableType;
   late String breaker;
   late int consumptionMeter;
-  late String industrialSocket;
+  late int industrialSocket;
   late int isolator;
 
   Activity.fromJson(Map<String, dynamic> json) {
@@ -29,22 +29,5 @@ class Activity {
     consumptionMeter = json['consumption_meter'];
     industrialSocket = json['Industrial_socket'];
     isolator = json['isolator'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['comment'] = this.comment;
-    data['image1'] = this.image1;
-    data['image2'] = this.image2;
-    data['image3'] = this.image3;
-    data['cable_length'] = this.cableLength;
-    data['pvc_length'] = this.pvcLength;
-    data['cable_type'] = this.cableType;
-    data['breaker'] = this.breaker;
-    data['consumption_meter'] = this.consumptionMeter;
-    data['Industrial_socket'] = this.industrialSocket;
-    data['isolator'] = this.isolator;
-    return data;
   }
 }

@@ -8,6 +8,7 @@ import 'package:installation/responses/user_response.dart';
 import 'package:installation/services/api.dart';
 import 'package:installation/views/home.dart';
 import 'package:installation/views/login.dart';
+import 'package:installation/views/profile.dart';
 import 'base_controller.dart';
 
 class AuthController extends GetxController with BaseController {
@@ -75,7 +76,7 @@ class AuthController extends GetxController with BaseController {
       {required Map<String, dynamic> Data, required context}) async {
     showLoading();
     print("Data ${Data}");
-    var response = await Api.EditProfile(editProfileData: Data);
+    var response = await Api.EditProfile(Data: Data);
     UserResponse.fromJson(response.data);
     hideLoading();
     GFToast.showToast(
@@ -83,7 +84,7 @@ class AuthController extends GetxController with BaseController {
       context,
       toastPosition: GFToastPosition.BOTTOM,
     );
-    Get.offAll(() => Home());
+    Get.offAll(() => Profile());
   }
 
   Future<void> ForgetPassword(

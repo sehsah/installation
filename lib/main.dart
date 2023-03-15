@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:installation/config/my_config.dart';
 import 'package:installation/config/palette.dart';
+import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/views/home.dart';
+import 'package:installation/views/login.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,6 +15,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  Get.put(AuthController());
+
   GetStorage().read('Lang') == null ? GetStorage().write('Lang', 'en') : '';
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   OneSignal.shared.setAppId(MyConfig.onesignalAppID);
@@ -77,7 +81,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en'),
       defaultTransition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 100),
-      home: const Home(),
+      home: GetStorage().read('login_token') != null ? Home() : Login(),
     );
   }
 }
