@@ -39,20 +39,23 @@ class Profile extends StatelessWidget {
 
   Widget _buildBody() {
     return ListView(
-      padding: FxSpacing.all(24),
+      padding: FxSpacing.all(20),
       children: [
         Center(
           child: FxContainer(
             margin: EdgeInsets.only(top: 40),
             color: Colors.transparent,
-            paddingAll: 0,
-            borderRadiusAll: 24,
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(24),
+            child: CircleAvatar(
+              radius: 55,
+              backgroundColor: Palette.maincolor,
+              child: ClipOval(
+                child: Image.network(
+                  users['avatar'],
+                  fit: BoxFit.cover,
+                  width: 100,
+                  height: 100,
+                ),
               ),
-              child: Image.network(users['avatar'],
-                  width: 150, height: 150, fit: BoxFit.contain),
             ),
           ),
         ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:installation/models/user.dart';
 import 'package:installation/responses/user_response.dart';
@@ -9,12 +10,13 @@ import 'package:installation/services/api.dart';
 import 'package:installation/views/home.dart';
 import 'package:installation/views/login.dart';
 import 'package:installation/views/profile.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'base_controller.dart';
 
 class AuthController extends GetxController with BaseController {
   var user = User().obs;
   var isLoggedIn = false.obs;
-
+  final Map<String, dynamic> _Data = {};
   @override
   void onInit() async {
     redirect();
@@ -28,6 +30,10 @@ class AuthController extends GetxController with BaseController {
       Get.to(() => Login());
     }
   } //end of redirect
+
+  Future<void> UpdateToken({required Map<String, dynamic> Data}) async {
+    await Api.updateToken(Data: Data);
+  }
 
   Future<void> login(
       {required Map<String, dynamic> loginData, required context}) async {
@@ -45,6 +51,9 @@ class AuthController extends GetxController with BaseController {
       await GetStorage().write('login_token', userResponse.token);
       user.value = userResponse.user;
       isLoggedIn.value = true;
+      _Data['token'] = GetStorage().read("notification_token");
+      UpdateToken(Data: _Data);
+
       Get.offAll(() => Home());
     }
     hideLoading();
@@ -131,8 +140,9 @@ class AuthController extends GetxController with BaseController {
 
   Future<void> logout() async {
     await GetStorage().remove('login_token');
+    GetStorage().remove('logged_user');
     isLoggedIn.value = false;
-    Get.off(() => Home());
+    Get.off(() => Login());
   } //end of logout
 
   Future<void> getUser() async {

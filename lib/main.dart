@@ -15,7 +15,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  Get.put(AuthController());
+  final authController = Get.put(AuthController());
 
   GetStorage().read('Lang') == null ? GetStorage().write('Lang', 'en') : '';
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
@@ -30,9 +30,16 @@ void main() async {
   });
   OneSignal.shared
       .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-    print("result ${result}");
+    //print("result ${result}");
   });
-
+  OneSignal.shared
+      .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+    String? onesignalUserId = changes.to.userId;
+    print("onesignalUserId ${onesignalUserId}");
+  });
+  var deviceState = await OneSignal.shared.getDeviceState();
+  GetStorage().write('notification_token', deviceState?.userId);
+  print(deviceState?.userId);
   runApp(MyApp());
 }
 

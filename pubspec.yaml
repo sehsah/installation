@@ -41,7 +41,7 @@ dependencies:
   get: any
   dio: any
   get_storage: any
-  onesignal_flutter: ^3.0.0
+  onesignal_flutter: ^3.5.0
   getwidget: ^2.0.4
   intl: any
   hexcolor: ^3.0.1

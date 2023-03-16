@@ -77,6 +77,12 @@ class Api {
     return dio.post('/login', data: formData);
   }
 
+  static updateToken({required Map<String, dynamic> Data}) {
+    FormData formData = FormData.fromMap(Data);
+    print("tokenData ${Data}");
+    return dio.post('/update/token', data: formData);
+  }
+
   static Future<Response> register(
       {required Map<String, dynamic> registerData}) async {
     FormData formData = FormData.fromMap(registerData);
