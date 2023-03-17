@@ -18,8 +18,8 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
-  final authController = Get.put(AuthController());
   final homeController = Get.put(HomeController());
+
   late final users = GetStorage().read('logged_user');
 
   @override

@@ -8,7 +8,7 @@
 PRODUCT_NAME = installation
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.installation
+PRODUCT_BUNDLE_IDENTIFIER = com.quikrev.installation
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.

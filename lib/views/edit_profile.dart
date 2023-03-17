@@ -56,7 +56,7 @@ class _EditProfileState extends State<EditProfile> {
       backgroundColor: Palette.maincolor,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(AppLocalizations.of(context)!.profile),
+        title: Text("profile"),
       ),
       body: Container(
           margin: EdgeInsets.only(top: 20),

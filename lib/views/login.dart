@@ -8,8 +8,10 @@ import 'package:getwidget/getwidget.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/theme/app_theme.dart';
 import 'package:installation/theme/custom_theme.dart';
+import 'package:installation/views/forget_password.dart';
 import 'package:installation/views/home.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -24,12 +26,13 @@ class Login extends StatefulWidget {
 
 class _LoginPageState extends State<Login> {
   final authController = Get.find<AuthController>();
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final Map<String, dynamic> _loginData = {};
 
-  bool _passwordVisible = false;
+  bool _passwordVisible = true;
 
   late CustomTheme customTheme;
   late ThemeData theme;
@@ -43,6 +46,8 @@ class _LoginPageState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    printInfo(info: GetStorage().read('login_token'));
+
     return Scaffold(
         body: ListView(
       padding: EdgeInsets.all(0),
@@ -93,7 +98,7 @@ class _LoginPageState extends State<Login> {
                             : MdiIcons.eyeOffOutline),
                         onPressed: () {
                           setState(() {
-                            _passwordVisible = _passwordVisible;
+                            _passwordVisible = !_passwordVisible;
                           });
                         },
                       ),
@@ -104,7 +109,12 @@ class _LoginPageState extends State<Login> {
                 Container(
                   margin: EdgeInsets.only(top: 20),
                   alignment: Alignment.centerRight,
-                  child: FxText.bodySmall("Forgot Password ?", fontWeight: 500),
+                  child: InkWell(
+                      onTap: () {
+                        Get.to(ForgetPassword());
+                      },
+                      child: FxText.bodySmall("Forgot Password ?",
+                          fontWeight: 500)),
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 20),

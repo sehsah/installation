@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:installation/config/my_config.dart';
@@ -9,14 +10,14 @@ import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/views/home.dart';
 import 'package:installation/views/login.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  final authController = Get.put(AuthController());
-
+  Get.create(() => GetMaterialApp());
+  // Get.create(() => HomeController());
+  Get.create(() => AuthController());
   GetStorage().read('Lang') == null ? GetStorage().write('Lang', 'en') : '';
   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   OneSignal.shared.setAppId(MyConfig.onesignalAppID);
@@ -29,17 +30,15 @@ void main() async {
     print("event ${event}");
   });
   OneSignal.shared
-      .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-    //print("result ${result}");
-  });
+      .setNotificationOpenedHandler((OSNotificationOpenedResult result) {});
   OneSignal.shared
       .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
     String? onesignalUserId = changes.to.userId;
     print("onesignalUserId ${onesignalUserId}");
+    onesignalUserId != null
+        ? GetStorage().write('notification_token', onesignalUserId)
+        : '';
   });
-  var deviceState = await OneSignal.shared.getDeviceState();
-  GetStorage().write('notification_token', deviceState?.userId);
-  print(deviceState?.userId);
   runApp(MyApp());
 }
 
@@ -51,9 +50,8 @@ class MyApp extends StatelessWidget {
         statusBarColor: Palette.maincolor, // Change the status bar color here
       ),
     );
-    Get.create(() => HomeController());
+
     return GetMaterialApp(
-      // ignore: prefer_const_literals_to_create_immutables
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -67,9 +65,7 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          fontFamily:
-              GetStorage().read('Lang') == 'en' ? 'OpenSans' : 'Almarai',
-          appBarTheme: const AppBarTheme(
+          appBarTheme: AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle(
                 statusBarColor: Palette.maincolor,
               ),
@@ -88,7 +84,7 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en'),
       defaultTransition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 100),
-      home: GetStorage().read('login_token') != null ? Home() : Login(),
+      home: GetStorage().read('login_token') == null ? Login() : Home(),
     );
   }
 }

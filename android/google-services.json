@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "191633823983",
+    "project_id": "quikr-ev-installation",
+    "storage_bucket": "quikr-ev-installation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191633823983:android:c3a7cacfe5e33af2f9e31a",
+        "android_client_info": {
+          "package_name": "com.quikrev.installation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "191633823983-b07u5ris2upjbjigartraq46kg9e2i82.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuyQL4-5TUZ2yBuuapQuLT-z0LPupmlCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "191633823983-b07u5ris2upjbjigartraq46kg9e2i82.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

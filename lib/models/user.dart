@@ -6,8 +6,6 @@ class User {
   late String email;
   late String avatar;
   late String full_name;
-  late int building;
-  late String apartment;
   User();
 
   User.fromJson(Map<String, dynamic> json) {
@@ -17,8 +15,5 @@ class User {
     email = json['email'];
     avatar = json['avatar'];
     mobile = json['mobile'];
-    full_name = json['full_name'];
-    building = json['building'];
-    apartment = json['apartment'];
   }
 } //end of model

@@ -19,28 +19,26 @@ class AuthController extends GetxController with BaseController {
   final Map<String, dynamic> _Data = {};
   @override
   void onInit() async {
-    redirect();
+    //redirect();
     super.onInit();
   }
 
   Future<void> redirect() async {
     var token = await GetStorage().read('login_token');
     if (token != null) {
+      Get.offAll(() => Home());
     } else {
-      Get.to(() => Login());
+      Get.offAll(() => Login());
     }
   } //end of redirect
-
-  Future<void> UpdateToken({required Map<String, dynamic> Data}) async {
-    await Api.updateToken(Data: Data);
-  }
 
   Future<void> login(
       {required Map<String, dynamic> loginData, required context}) async {
     showLoading();
+    loginData['token'] = GetStorage().read("notification_token");
     var response = await Api.login(loginData: loginData);
-    print(response.data['state']);
     if (response.data['state'] == false) {
+      hideLoading();
       GFToast.showToast(
         response.data['msg'],
         context,
@@ -48,15 +46,13 @@ class AuthController extends GetxController with BaseController {
       );
     } else {
       var userResponse = UserResponse.fromJson(response.data);
-      await GetStorage().write('login_token', userResponse.token);
-      user.value = userResponse.user;
-      isLoggedIn.value = true;
-      _Data['token'] = GetStorage().read("notification_token");
-      UpdateToken(Data: _Data);
+      GetStorage().write('login_token', userResponse.token);
+      // user.value = userResponse.user;
+      // isLoggedIn.value = true;
+      hideLoading();
 
-      Get.offAll(() => Home());
+      Get.off(() => Home());
     }
-    hideLoading();
   } //end of login
 
   Future<void> register(

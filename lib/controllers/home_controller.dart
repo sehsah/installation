@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutx/flutx.dart';
 import 'package:get/get.dart';
-import 'package:getwidget/getwidget.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/base_controller.dart';
 import 'package:installation/models/order.dart';
@@ -16,13 +15,16 @@ class HomeController extends GetxController with BaseController {
 
   @override
   void onInit() {
-    getOrder();
     super.onInit();
+    getOrder();
   }
 
   Future<void> getOrder() async {
     isLoading.value = true;
+    orders.clear();
+    orders2.clear();
     var response = await Api.getOrders();
+    print("all orders ${response}");
     var orderResponse = OrderResponse.fromJson(response.data);
     orders.addAll(orderResponse.data);
     orders2.addAll(orderResponse.data2);
