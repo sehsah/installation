@@ -62,6 +62,7 @@ class Api {
 
   static Future<Response> getOrders() {
     var id = GetStorage().read('logged_user')['id'];
+    print(id);
     return dio.get('/orders/${id}');
   }
 

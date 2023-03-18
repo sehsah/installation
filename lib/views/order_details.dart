@@ -10,7 +10,6 @@ import 'package:getwidget/getwidget.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/controllers/home_controller.dart';
-import 'package:installation/models/activity.dart';
 import 'package:installation/models/order.dart';
 import 'package:installation/theme/app_theme.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -308,7 +307,7 @@ class _OrderDetails extends State<OrderDetails>
                 style: ElevatedButton.styleFrom(
                   primary: Palette.maincolor, // Background color
                 ),
-                onPressed: () => _openMaps(),
+                onPressed: () => openDialPad('+201021212121'),
                 child: Row(
                   children: [
                     Icon(MdiIcons.phone, size: 20),
@@ -322,7 +321,7 @@ class _OrderDetails extends State<OrderDetails>
                 style: ElevatedButton.styleFrom(
                   primary: Palette.maincolor, // Background color
                 ),
-                onPressed: () => _openMaps(),
+                onPressed: () => launchWhatsApp("+1 555-555-5555"),
                 child: Row(
                   children: [
                     Icon(MdiIcons.whatsapp, size: 20),
@@ -339,142 +338,145 @@ class _OrderDetails extends State<OrderDetails>
   }
 
   Widget SiteWdiget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10),
-          child: Text("Site Information",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Site Name : ",
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w500)),
-                ),
-                Text(widget.order.site.name, style: TextStyle(fontSize: 16.0))
-              ],
+    return Flexible(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10),
+            child: Text("Site Information",
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Site Name : ",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(widget.order.site.name, style: TextStyle(fontSize: 16.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Apartment Number : ",
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${widget.order.site.apartmentNumber}",
-                    style: TextStyle(fontSize: 16.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Apartment Number : ",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${widget.order.site.apartmentNumber}",
+                      style: TextStyle(fontSize: 16.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Street Name : ",
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${widget.order.site.street}",
-                    style: TextStyle(fontSize: 16.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Street Name Street Name sgsdg  : ",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${widget.order.site.street}",
+                      style: TextStyle(fontSize: 16.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Additional Direction : ",
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${widget.order.site.additionalDirection}",
-                    style: TextStyle(fontSize: 16.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Additional Direction : ",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${widget.order.site.additionalDirection}",
+                      style: TextStyle(fontSize: 16.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("City : ",
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${widget.order.site.city}",
-                    style: TextStyle(fontSize: 16.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("City : ",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${widget.order.site.city}",
+                      style: TextStyle(fontSize: 16.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Country : ",
-                      style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${widget.order.site.country}",
-                    style: TextStyle(fontSize: 16.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Country : ",
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${widget.order.site.country}",
+                      style: TextStyle(fontSize: 16.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15, right: 15),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Palette.maincolor, // Background color
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin:
+                EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15, right: 15),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Palette.maincolor, // Background color
+              ),
+              onPressed: () => _openMaps(),
+              child: Text('Open Location '),
             ),
-            onPressed: () => _openMaps(),
-            child: Text('Open Location '),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -1007,7 +1009,7 @@ class _OrderDetails extends State<OrderDetails>
                         Icon(MdiIcons.account, size: 24),
                         FxSpacing.width(10),
                         FxText.bodyMedium(
-                            "${widget.order.activity[i].name} add log at : ${widget.order.activity[i].date}",
+                            "${widget.order.activity[i].name}  | : ${widget.order.activity[i].date}",
                             fontWeight: 400)
                       ],
                     ),
@@ -1018,13 +1020,22 @@ class _OrderDetails extends State<OrderDetails>
     );
   }
 
-  Future<void> _openMaps() async {
-    String googleMapsUrl =
-        'https://www.google.com/maps/dir/?api=1&destination=${widget.order.site.lat},${widget.order.site.long}';
-    if (await canLaunch(googleMapsUrl)) {
-      await launch(googleMapsUrl);
+  openDialPad(String phoneNumber) async {
+    String url = 'tel://' + phoneNumber;
+    launch(url);
+  }
+
+  launchWhatsApp(String phoneNumber) async {
+    if (Platform.isAndroid) {
+      launchUrl(Uri.parse("https://wa.me/966558604666"));
     } else {
-      throw 'Could not open Google Maps';
+      launchUrl(Uri.parse("https://wa.me/966558604666"));
     }
+  }
+
+  Future<void> _openMaps() async {
+    Uri googleMapsUrl = Uri.parse(
+        'https://www.google.com/maps/dir/?api=1&destination=${widget.order.site.lat},${widget.order.site.long}');
+    launchUrl(googleMapsUrl);
   }
 }
