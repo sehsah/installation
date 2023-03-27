@@ -11,6 +11,7 @@ import 'package:installation/views/home.dart';
 import 'package:installation/views/login.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -84,7 +85,20 @@ class MyApp extends StatelessWidget {
       fallbackLocale: const Locale('en'),
       defaultTransition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 100),
-      home: GetStorage().read('login_token') == null ? Login() : Home(),
+      home: SplashScreen(
+        photoSize: 100,
+        useLoader: false,
+        seconds: 5,
+        navigateAfterSeconds:
+            GetStorage().read('login_token') == null ? Login() : Home(),
+        image: Image.asset(
+          'assets/splash-logo.gif',
+          width: 1000,
+        ),
+        backgroundColor: Palette.background,
+      ),
     );
   }
 }
+
+//GetStorage().read('login_token') == null ? Login() : Home()

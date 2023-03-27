@@ -47,22 +47,25 @@ class _LoginPageState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     printInfo(info: GetStorage().read('login_token'));
-
     return Scaffold(
         body: ListView(
       padding: EdgeInsets.all(0),
       children: <Widget>[
         Container(
-          height: MediaQuery.of(context).size.height * 3 / 10,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                bottom: 20,
-                right: 40,
-                child: FxText.headlineSmall("LOGIN", fontWeight: 600),
-              )
-            ],
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/Login-Page-2.png"),
+                fit: BoxFit.cover),
           ),
+          height: MediaQuery.of(context).size.height * 2 / 10,
+        ),
+        FxSpacing.height(20),
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/logo2.png"), fit: BoxFit.contain),
+          ),
+          height: 80,
         ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -145,43 +148,6 @@ class _LoginPageState extends State<Login> {
             ),
           ),
         ),
-        // Container(
-        //   margin: EdgeInsets.only(top: 24),
-        //   child: Center(
-        //     child: FxText.bodyMedium("OR", fontWeight: 500),
-        //   ),
-        // ),
-        // Container(
-        //   margin: EdgeInsets.only(top: 20, bottom: 20),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: <Widget>[
-        //       FxContainer.rounded(
-        //           width: 52,
-        //           height: 52,
-        //           paddingAll: 0,
-        //           color: theme.colorScheme.primary,
-        //           child: Icon(
-        //             MdiIcons.facebook,
-        //             color: theme.colorScheme.onPrimary,
-        //             size: 30,
-        //           )),
-        //       SizedBox(
-        //         width: 20,
-        //       ),
-        //       FxContainer.rounded(
-        //           width: 52,
-        //           height: 52,
-        //           paddingAll: 0,
-        //           color: theme.colorScheme.primary,
-        //           child: Icon(
-        //             MdiIcons.google,
-        //             color: theme.colorScheme.onPrimary,
-        //             size: 30,
-        //           )),
-        //     ],
-        //   ),
-        // )
       ],
     ));
   }

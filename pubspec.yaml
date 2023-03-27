@@ -31,6 +31,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  splashscreen:  
   flutter_localizations:
       sdk: flutter
   flutx:
@@ -52,6 +53,7 @@ dependencies:
   geolocator: ^8.2.0
   geocoding: ^2.0.4
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -63,6 +65,9 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.12.0"
+
+
+
 
 flutter_icons:
   android: "launcher_icon"

@@ -17,6 +17,8 @@ class Order {
   late int connectionNumber;
   late String charger;
   late String status;
+  late String status_key;
+  late String new_step;
   List<Activity> activity = [];
 
   Order.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class Order {
 
     id = json['id'];
     work_name = json['work_name'];
+    new_step = json['new_step'];
     agent = json['agent'] != null ? Agent.fromJson(json['agent']) : null;
     customer =
         json['customer'] != null ? Customer.fromJson(json['customer']) : null;
@@ -39,6 +42,7 @@ class Order {
     connectionNumber = json['connection_number'];
     charger = json['charger'];
     status = json['status'];
+    status_key = json['status_key'];
     state = json['state'];
     activity = (json['activity'] as List)
         .map((activityJson) => Activity.fromJson(activityJson))

@@ -5,13 +5,17 @@ import 'package:get/get.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/base_controller.dart';
 import 'package:installation/models/order.dart';
+import 'package:installation/responses/order_details_response.dart';
 import 'package:installation/responses/order_response.dart';
 import 'package:installation/services/api.dart';
+import 'package:installation/views/home.dart';
 
 class HomeController extends GetxController with BaseController {
   RxBool isLoading = true.obs;
   RxList<Order> orders = <Order>[].obs;
   RxList<Order> orders2 = <Order>[].obs;
+  final Rx<Order> order = (null as Order).obs;
+  RxBool isLoadingDetails = true.obs;
 
   @override
   void onInit() {
@@ -24,16 +28,18 @@ class HomeController extends GetxController with BaseController {
     orders.clear();
     orders2.clear();
     var response = await Api.getOrders();
-    print("all orders ${response}");
     var orderResponse = OrderResponse.fromJson(response.data);
     orders.addAll(orderResponse.data);
     orders2.addAll(orderResponse.data2);
     isLoading.value = false;
   }
 
-  Future<void> getOrderDetails(id) async {
+  getOrderDetails(id) async {
+    isLoadingDetails.value = true;
     var response = await Api.OrderDetails(id);
-    return response.data;
+    var orderResponse = OrderResponseDetails.fromJson(response.data);
+    order.value = orderResponse.data;
+    isLoadingDetails.value = false;
   }
 
   Future<void> addLog({required Data, context}) async {
@@ -41,12 +47,24 @@ class HomeController extends GetxController with BaseController {
     var response = await Api.addLog(Data: Data);
     await Api.OrderDetails(Data['order_id']);
     hideLoading();
+    getOrderDetails(Data['order_id']);
+
     if (response.data['state'] == true) {
-      _showDialog(context);
+      _showDialog("Your Comment Added", context);
     }
   }
 
-  _showDialog(context) {
+  Future<void> AcceptOrder({required Data, context}) async {
+    showLoading();
+    var response = await Api.AcceptOrder(Data: Data);
+    hideLoading();
+    getOrder();
+    if (response.data['state'] == true) {
+      _showDialog("Approved successfully", context);
+    }
+  }
+
+  _showDialog(msg, context) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -55,7 +73,7 @@ class HomeController extends GetxController with BaseController {
           title: FxText.titleMedium('Success', fontWeight: 600),
           content: Container(
             margin: FxSpacing.top(16),
-            child: FxText.bodyLarge('Your Comment Added', fontWeight: 400),
+            child: FxText.bodyLarge(msg, fontWeight: 400),
           ),
           actions: <Widget>[
             CupertinoDialogAction(

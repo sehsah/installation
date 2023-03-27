@@ -57,12 +57,12 @@ class Api {
   static Future<Response> AcceptOrder(
       {required Map<String, dynamic> Data}) async {
     FormData formData = FormData.fromMap(Data);
+    print(Data);
     return dio.post('/order/accept', data: formData);
   }
 
   static Future<Response> getOrders() {
     var id = GetStorage().read('logged_user')['id'];
-    print(id);
     return dio.get('/orders/${id}');
   }
 
@@ -75,5 +75,13 @@ class Api {
     print(Data);
 
     return dio.post('/add/log', data: formData);
+  }
+
+  static Future<Response> getNotifications() {
+    return dio.get('/notification');
+  }
+
+  static Future<Response> deleteNotifications(id) {
+    return dio.get('/notification/delete/${id}');
   }
 } //end of api

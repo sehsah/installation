@@ -1,9 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutx/flutx.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:getwidget/getwidget.dart';
+import 'package:installation/config/palette.dart';
 import 'package:installation/models/user.dart';
 import 'package:installation/responses/user_response.dart';
 import 'package:installation/services/api.dart';
@@ -39,11 +43,7 @@ class AuthController extends GetxController with BaseController {
     var response = await Api.login(loginData: loginData);
     if (response.data['state'] == false) {
       hideLoading();
-      GFToast.showToast(
-        response.data['msg'],
-        context,
-        toastPosition: GFToastPosition.BOTTOM,
-      );
+      _showDialog(response.data['msg'], context);
     } else {
       var userResponse = UserResponse.fromJson(response.data);
       GetStorage().write('login_token', userResponse.token);
@@ -126,11 +126,7 @@ class AuthController extends GetxController with BaseController {
     showLoading();
     var response = await Api.RecovePassword(Data: Data);
     hideLoading();
-    GFToast.showToast(
-      response.data['msg'],
-      context,
-      toastPosition: GFToastPosition.BOTTOM,
-    );
+    _showDialog(response.data['msg'], context);
     Get.to(() => Login());
   }
 
@@ -147,5 +143,32 @@ class AuthController extends GetxController with BaseController {
     var userResponse = UserResponse.fromJson(response.data);
     user.value = userResponse.user;
     isLoggedIn.value = true;
+  }
+
+  _showDialog(msg, context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: FxText.titleMedium('Error', fontWeight: 600),
+          content: Container(
+            margin: FxSpacing.top(16),
+            child: FxText.bodyLarge(msg, fontWeight: 400),
+          ),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              child: FxText.titleMedium('OK',
+                  color: Palette.maincolor,
+                  fontWeight: 700,
+                  letterSpacing: 0.3),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 } //end o
