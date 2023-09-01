@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^2.1.0
+  google_fonts: ^5.1.0
   provider: ^5.0.0
   shared_preferences: ^2.0.6
   flutter_svg: ^1.0.0
-  http: ^0.13.4
+  http: ^1.0.0
 
 
 

@@ -28,6 +28,7 @@ class _Home extends State<Home> {
           resizeToAvoidBottomInset: true,
           backgroundColor: Color.fromARGB(255, 243, 243, 243),
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: Text(
               "Hello ${users['first_name']} ${users['last_name']}",
             ),
@@ -126,7 +127,10 @@ class _Home extends State<Home> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     FxText.bodyMedium(
-                                      "${orders[index].date!.weekday}/${orders[index].date!.month}",
+                                      "${orders[index].date!.month}" +
+                                          "/" +
+                                          DateFormat('d')
+                                              .format(orders[index].date!),
                                       fontWeight: 700,
                                     ),
                                     FxText.bodySmall(
@@ -157,7 +161,7 @@ class _Home extends State<Home> {
                                 ),
                                 FxSpacing.height(4),
                                 FxText.bodySmall(
-                                  orders[index].status,
+                                  orders[index].status ?? '',
                                   fontSize: 10,
                                 ),
                                 FxSpacing.height(4),

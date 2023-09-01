@@ -254,7 +254,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text(homeController.order.value.customer!.firstName,
+                Text(homeController.order.value!.customer!.firstName,
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -273,7 +273,7 @@ class _OrderDetails extends State<OrderDetails>
                         style: TextStyle(
                             fontSize: 14.0, fontWeight: FontWeight.w500)),
                   ),
-                  Text(homeController.order.value.customer!.lastName,
+                  Text(homeController.order.value!.customer!.lastName,
                       style: TextStyle(fontSize: 14.0)),
                 ],
               ),
@@ -292,7 +292,7 @@ class _OrderDetails extends State<OrderDetails>
                         style: TextStyle(
                             fontSize: 14.0, fontWeight: FontWeight.w500)),
                   ),
-                  Text(homeController.order.value.customer!.phone,
+                  Text(homeController.order.value!.customer!.phone,
                       style: TextStyle(fontSize: 14.0))
                 ],
               ),
@@ -310,7 +310,7 @@ class _OrderDetails extends State<OrderDetails>
                         style: TextStyle(
                             fontSize: 14.0, fontWeight: FontWeight.w500)),
                   ),
-                  Text(homeController.order.value.customer!.email,
+                  Text(homeController.order.value!.customer!.email,
                       style: TextStyle(fontSize: 14.0))
                 ],
               ),
@@ -323,7 +323,8 @@ class _OrderDetails extends State<OrderDetails>
                 style: ElevatedButton.styleFrom(
                   primary: Palette.maincolor, // Background color
                 ),
-                onPressed: () => openDialPad('+201021212121'),
+                onPressed: () =>
+                    openDialPad(homeController.order.value!.customer!.phone),
                 child: Row(
                   children: [
                     Icon(MdiIcons.phone, size: 20),
@@ -338,7 +339,7 @@ class _OrderDetails extends State<OrderDetails>
                   primary: Palette.maincolor, // Background color
                 ),
                 onPressed: () => launchWhatsApp(
-                    '971${homeController.order.value.customer!.phone}'),
+                    '971${homeController.order.value!.customer!.phone}'),
                 child: Row(
                   children: [
                     Icon(MdiIcons.whatsapp, size: 20),
@@ -389,7 +390,7 @@ class _OrderDetails extends State<OrderDetails>
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Text(homeController.order.value.site.name,
+                  child: Text(homeController.order.value!.site.name,
                       style: TextStyle(
                           color: Colors.grey,
                           fontSize: 14.0,
@@ -426,7 +427,7 @@ class _OrderDetails extends State<OrderDetails>
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                      "${homeController.order.value.site.apartmentNumber}",
+                      "${homeController.order.value!.site.apartmentNumber}",
                       style: TextStyle(color: Colors.grey, fontSize: 14.0)),
                 )
               ],
@@ -459,7 +460,7 @@ class _OrderDetails extends State<OrderDetails>
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Text("${homeController.order.value.site.street}",
+                  child: Text("${homeController.order.value!.site.street}",
                       style: TextStyle(color: Colors.grey, fontSize: 14.0)),
                 )
               ],
@@ -493,7 +494,7 @@ class _OrderDetails extends State<OrderDetails>
                 Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: Text(
-                      "${homeController.order.value.site.additionalDirection}",
+                      "${homeController.order.value!.site.additionalDirection}",
                       style: TextStyle(color: Colors.grey, fontSize: 14.0)),
                 )
               ],
@@ -515,7 +516,7 @@ class _OrderDetails extends State<OrderDetails>
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
                 Expanded(
-                  child: Text("${homeController.order.value.site.city}",
+                  child: Text("${homeController.order.value!.site.city}",
                       style: TextStyle(fontSize: 14.0)),
                 )
               ],
@@ -535,7 +536,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text("${homeController.order.value.site.country}",
+                Text("${homeController.order.value!.site.country}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -579,7 +580,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text("${homeController.order.value.work_name}",
+                Text("${homeController.order.value!.work_name}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -598,7 +599,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text("${homeController.order.value.status}",
+                Text("${homeController.order.value?.status}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -618,7 +619,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text("${homeController.order.value.agent?.firstName}",
+                Text("${homeController.order.value!.agent?.firstName}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -638,7 +639,7 @@ class _OrderDetails extends State<OrderDetails>
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
                 Text(
-                    "${homeController.order.value.date!.weekday}/${homeController.order.value.date!.month}/${homeController.order.value.date!.year}",
+                    "${homeController.order.value!.date!.weekday}/${homeController.order.value!.date!.month}/${homeController.order.value!.date!.year}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -658,7 +659,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text(" ${homeController.order.value.time}",
+                Text(" ${homeController.order.value!.time}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -677,7 +678,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text(" ${homeController.order.value.connectionType}",
+                Text(" ${homeController.order.value!.connectionType}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -697,7 +698,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text(" ${homeController.order.value.connectionNumber}",
+                Text(" ${homeController.order.value!.connectionNumber}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -716,7 +717,7 @@ class _OrderDetails extends State<OrderDetails>
                       style: TextStyle(
                           fontSize: 14.0, fontWeight: FontWeight.w500)),
                 ),
-                Text(" ${homeController.order.value.charger}",
+                Text(" ${homeController.order.value!.charger}",
                     style: TextStyle(fontSize: 14.0))
               ],
             ),
@@ -727,19 +728,19 @@ class _OrderDetails extends State<OrderDetails>
   }
 
   Widget ActionsWdiget() {
-    print(homeController.order.value.agent);
+    print(homeController.order.value!.agent);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: homeController.order.value.status_key == "COMPLETED"
+          child: homeController.order.value!.status_key == "COMPLETED"
               ? Center(
                   child: Text(
                   "This Site is Completed",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ))
-              : homeController.order.value.agent != null
+              : homeController.order.value!.agent != null
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -753,7 +754,7 @@ class _OrderDetails extends State<OrderDetails>
                                 theme.inputDecorationTheme.focusedBorder,
                           ),
                         ),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? Container(
                                 margin: EdgeInsets.only(top: 8),
@@ -771,7 +772,7 @@ class _OrderDetails extends State<OrderDetails>
                                 ),
                               )
                             : Container(),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? Container(
                                 margin: EdgeInsets.only(top: 8),
@@ -790,7 +791,7 @@ class _OrderDetails extends State<OrderDetails>
                               )
                             : Container(),
                         FxSpacing.height(10),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? DropdownButton(
                                 isExpanded: true,
@@ -804,7 +805,7 @@ class _OrderDetails extends State<OrderDetails>
                               )
                             : Container(),
                         FxSpacing.height(10),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? DropdownButton(
                                 isExpanded: true,
@@ -818,7 +819,7 @@ class _OrderDetails extends State<OrderDetails>
                               )
                             : Container(),
                         FxSpacing.height(10),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? SwitchListTile(
                                 activeColor: Palette.maincolor,
@@ -838,7 +839,7 @@ class _OrderDetails extends State<OrderDetails>
                                 value: consumption_meter,
                               )
                             : Container(),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? SwitchListTile(
                                 activeColor: Palette.maincolor,
@@ -858,7 +859,7 @@ class _OrderDetails extends State<OrderDetails>
                                 value: industrial_socket,
                               )
                             : Container(),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? SwitchListTile(
                                 activeColor: Palette.maincolor,
@@ -878,7 +879,7 @@ class _OrderDetails extends State<OrderDetails>
                                 value: isolator,
                               )
                             : Container(),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? Container(
                                 margin: EdgeInsets.symmetric(
@@ -923,7 +924,7 @@ class _OrderDetails extends State<OrderDetails>
                                 ),
                               )
                             : Container(),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? Container(
                                 margin: EdgeInsets.symmetric(
@@ -968,7 +969,7 @@ class _OrderDetails extends State<OrderDetails>
                                 ),
                               )
                             : Container(),
-                        homeController.order.value.status ==
+                        homeController.order.value!.status ==
                                 'Customer Contacted'
                             ? Container(
                                 margin: EdgeInsets.symmetric(
@@ -1032,6 +1033,13 @@ class _OrderDetails extends State<OrderDetails>
                             ),
                             child: ElevatedButton(
                                 onPressed: () {
+                                  if (_commentController.text == "") {
+                                    Get.snackbar(
+                                      "Error",
+                                      "Please Enter Comment",
+                                    );
+                                    return;
+                                  }
                                   _ActionData['comment'] =
                                       _commentController.text;
                                   _ActionData['cable_length'] =
@@ -1050,7 +1058,7 @@ class _OrderDetails extends State<OrderDetails>
                                       .read('logged_user')['id']
                                       .toString();
                                   _ActionData['order_id'] =
-                                      homeController.order.value.id;
+                                      homeController.order.value!.id;
                                   _ActionData['image1'] = image != null
                                       ? "data:image/png;base64,${base64Encode(image!.readAsBytesSync())}"
                                       : "";
@@ -1081,7 +1089,7 @@ class _OrderDetails extends State<OrderDetails>
                                     padding: MaterialStateProperty.all(
                                         FxSpacing.xy(16, 0))),
                                 child: FxText.bodyMedium(
-                                    "Update To ${homeController.order.value.new_step}",
+                                    "Update To ${homeController.order.value!.new_step}",
                                     fontWeight: 700,
                                     letterSpacing: 0.2,
                                     color: Colors.white)),
@@ -1091,7 +1099,7 @@ class _OrderDetails extends State<OrderDetails>
                     )
                   : InkWell(
                       onTap: () {
-                        _Data['id'] = homeController.order.value.id;
+                        _Data['id'] = homeController.order.value!.id;
                         homeController.AcceptOrder(Data: _Data);
                       },
                       child: FxButton(
@@ -1110,7 +1118,7 @@ class _OrderDetails extends State<OrderDetails>
   Widget LogWdiget() {
     return Container(
       height: 200,
-      child: homeController.order.value.activity.isNotEmpty
+      child: homeController.order.value!.activity.isNotEmpty
           ? Stepper(
               physics: ClampingScrollPhysics(),
               controlsBuilder: (BuildContext context, ControlsDetails details) {
@@ -1124,13 +1132,13 @@ class _OrderDetails extends State<OrderDetails>
               },
               steps: <Step>[
                 for (int i = 0;
-                    i < homeController.order.value.activity.length;
+                    i < homeController.order.value!.activity.length;
                     i++)
                   Step(
                     isActive: true,
                     state: StepState.complete,
                     title: FxText.bodyLarge(
-                        homeController.order.value.activity[i].comment,
+                        homeController.order.value!.activity[i].comment,
                         fontWeight: 600),
                     content: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1138,7 +1146,7 @@ class _OrderDetails extends State<OrderDetails>
                         Icon(MdiIcons.account, size: 24),
                         FxSpacing.width(10),
                         FxText.bodyMedium(
-                            "${homeController.order.value.activity[i].name}  | ${homeController.order.value.activity[i].date}",
+                            "${homeController.order.value!.activity[i].name}  | ${homeController.order.value!.activity[i].date}",
                             fontWeight: 400)
                       ],
                     ),
@@ -1167,11 +1175,16 @@ class _OrderDetails extends State<OrderDetails>
   }
 
   Future<void> _openMaps() async {
-    // Uri googleMapsUrl = Uri.parse(
-    //     'https://www.google.com/maps/dir/?api=1&destination=${homeController.order.value.site.lat},${homeController.order.value.site.long}');
-
     Uri googleMapsUrl = Uri.parse(
-        "google.navigation:q=${homeController.order.value.site.lat},${homeController.order.value.site.long}&mode=d");
-    launchUrl(googleMapsUrl);
+        "google.navigation:q=${homeController.order.value!.site.lat},${homeController.order.value!.site.long}&mode=d");
+    print(googleMapsUrl);
+    final url =
+        'https://www.google.com/maps/dir/?api=1&destination=${homeController.order.value!.site.lat},${homeController.order.value!.site.long}';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

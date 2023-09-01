@@ -6,7 +6,6 @@ class OrderResponseDetails {
   OrderResponseDetails();
 
   OrderResponseDetails.fromJson(Map<String, dynamic> json) {
-    print(json['data']);
     data = Order.fromJson(json['data']);
   }
 }

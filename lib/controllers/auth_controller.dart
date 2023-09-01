@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutx/flutx.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:installation/config/palette.dart';
@@ -14,13 +11,13 @@ import 'package:installation/services/api.dart';
 import 'package:installation/views/home.dart';
 import 'package:installation/views/login.dart';
 import 'package:installation/views/profile.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'base_controller.dart';
 
 class AuthController extends GetxController with BaseController {
   var user = User().obs;
   var isLoggedIn = false.obs;
   final Map<String, dynamic> _Data = {};
+
   @override
   void onInit() async {
     //redirect();

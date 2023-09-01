@@ -55,12 +55,12 @@
 		<string>This app requires access to the camera.</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>This app needs access to location when open.</string>
-        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-        <string>Application requires user’s location for better user experience.</string>
-        <key>NSLocationAlwaysUsageDescription</key>
-        <string>Application requires user’s location for better user experience.</string>
-        <key>NSLocationWhenInUseUsageDescription</key>
-        <string>Application requires user’s location for better user experience.</string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>Application requires user’s location for better user experience.</string>
+		<key>NSLocationAlwaysUsageDescription</key>
+		<string>Application requires user’s location for better user experience.</string>
+		<key>NSLocationWhenInUseUsageDescription</key>
+		<string>Application requires user’s location for better user experience.</string>
 		<key>UIStatusBarHidden</key>
 		<true/>
 	</dict>

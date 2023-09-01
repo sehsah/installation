@@ -6,12 +6,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:installation/config/my_config.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
-import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/views/home.dart';
 import 'package:installation/views/login.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:splashscreen/splashscreen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -36,6 +34,8 @@ void main() async {
       .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
     String? onesignalUserId = changes.to.userId;
     print("onesignalUserId ${onesignalUserId}");
+    String? logged = GetStorage().read('login_token') ?? "no";
+    print(logged);
     onesignalUserId != null
         ? GetStorage().write('notification_token', onesignalUserId)
         : '';
@@ -53,52 +53,38 @@ class MyApp extends StatelessWidget {
     );
 
     return GetMaterialApp(
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      // ignore: prefer_const_literals_to_create_immutables
-      supportedLocales: [
-        const Locale('en', ''),
-        const Locale('ar', ''),
-      ],
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          appBarTheme: AppBarTheme(
-              systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarColor: Palette.maincolor,
-              ),
-              iconTheme: IconThemeData(color: Colors.white),
-              color: Palette.maincolor,
-              elevation: 0,
-              foregroundColor: Colors.white),
-          textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontFamily: GetStorage().read('Lang') == 'en'
-                      ? 'OpenSans'
-                      : 'Almarai'))),
-      themeMode: ThemeMode.light,
-      locale: Locale(GetStorage().read('Lang')),
-      fallbackLocale: const Locale('en'),
-      defaultTransition: Transition.fade,
-      transitionDuration: const Duration(milliseconds: 100),
-      home: SplashScreen(
-        photoSize: 100,
-        useLoader: false,
-        seconds: 5,
-        navigateAfterSeconds:
-            GetStorage().read('login_token') == null ? Login() : Home(),
-        image: Image.asset(
-          'assets/splash-logo.gif',
-          width: 1000,
-        ),
-        backgroundColor: Palette.background,
-      ),
-    );
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        // ignore: prefer_const_literals_to_create_immutables
+        supportedLocales: [
+          const Locale('en', ''),
+          const Locale('ar', ''),
+        ],
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            appBarTheme: AppBarTheme(
+                systemOverlayStyle: SystemUiOverlayStyle(
+                  statusBarColor: Palette.maincolor,
+                ),
+                iconTheme: IconThemeData(color: Colors.white),
+                color: Palette.maincolor,
+                elevation: 0,
+                foregroundColor: Colors.white),
+            textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontFamily: GetStorage().read('Lang') == 'en'
+                        ? 'OpenSans'
+                        : 'Almarai'))),
+        themeMode: ThemeMode.light,
+        locale: Locale(GetStorage().read('Lang')),
+        fallbackLocale: const Locale('en'),
+        defaultTransition: Transition.fade,
+        transitionDuration: const Duration(milliseconds: 100),
+        home: GetStorage().read('login_token') == null ? Login() : Home());
   }
 }
-
-//GetStorage().read('login_token') == null ? Login() : Home()

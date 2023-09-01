@@ -1,18 +1,18 @@
 class Activity {
   late int id;
   late String comment;
-  late String image1;
-  late String image2;
-  late String image3;
-  late String name;
-  late String date;
-  late int cableLength;
-  late int pvcLength;
-  late String cableType;
-  late String breaker;
-  late int consumptionMeter;
-  late int industrialSocket;
-  late int isolator;
+  String? image1;
+  String? image2;
+  String? image3;
+  String? name;
+  String? date;
+  String? cableLength;
+  String? pvcLength;
+  String? cableType;
+  String? breaker;
+  String? consumptionMeter;
+  String? industrialSocket;
+  String? isolator;
 
   Activity.fromJson(Map<String, dynamic> json) {
     id = json['id'];

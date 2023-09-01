@@ -8,13 +8,14 @@ import 'package:installation/models/order.dart';
 import 'package:installation/responses/order_details_response.dart';
 import 'package:installation/responses/order_response.dart';
 import 'package:installation/services/api.dart';
-import 'package:installation/views/home.dart';
 
 class HomeController extends GetxController with BaseController {
   RxBool isLoading = true.obs;
   RxList<Order> orders = <Order>[].obs;
   RxList<Order> orders2 = <Order>[].obs;
-  final Rx<Order> order = (null as Order).obs;
+  //final Rx<Order> order = Order().obs;
+  //late final Rx<Order?> order;
+  final order = Rx<Order?>(null);
   RxBool isLoadingDetails = true.obs;
 
   @override
@@ -35,10 +36,19 @@ class HomeController extends GetxController with BaseController {
   }
 
   getOrderDetails(id) async {
+    // isLoadingDetails.value = true;
+    // var response = await Api.OrderDetails(id);
+    // var orderResponse = OrderResponseDetails.fromJson(response.data);
+    // order.value = orderResponse.data;
+    // isLoadingDetails.value = false;
     isLoadingDetails.value = true;
-    var response = await Api.OrderDetails(id);
-    var orderResponse = OrderResponseDetails.fromJson(response.data);
-    order.value = orderResponse.data;
+    try {
+      var response = await Api.OrderDetails(id);
+      var orderResponse = OrderResponseDetails.fromJson(response.data);
+      order.value = orderResponse.data;
+    } catch (error) {
+      print("Error: $error");
+    }
     isLoadingDetails.value = false;
   }
 

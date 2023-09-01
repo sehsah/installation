@@ -43,10 +43,15 @@ class _EditProfileState extends State<EditProfile> {
   @override
   void initState() {
     super.initState();
-    _textEditfirstname.text = users['first_name'];
-    _textEditlastname.text = users['last_name'];
-    _textEditEmail.text = users['email'];
-    _textEditPhone.text = users['phone'];
+    print(users);
+    users['first_name'] != null
+        ? _textEditfirstname.text = users['first_name']
+        : '';
+    users['last_name'] != null
+        ? _textEditlastname.text = users['last_name']
+        : '';
+    users['last_name'] != null ? _textEditEmail.text = users['email'] : '';
+    users['last_name'] != null ? _textEditPhone.text = users['phone'] : '';
   }
 
   @override

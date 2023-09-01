@@ -2,12 +2,12 @@ class Site {
   late int id;
   late String createdAt;
   late String updatedAt;
-  late int type;
-  late int customer;
+  late String type;
+  late String customer;
   late String name;
-  late String apartmentNumber;
+  String? apartmentNumber;
   late String street;
-  late String additionalDirection;
+  String? additionalDirection;
   late String city;
   late String country;
   late String lat;

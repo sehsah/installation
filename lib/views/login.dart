@@ -46,7 +46,6 @@ class _LoginPageState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    printInfo(info: GetStorage().read('login_token'));
     return Scaffold(
         body: ListView(
       padding: EdgeInsets.all(0),

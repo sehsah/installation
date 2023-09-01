@@ -1,6 +1,6 @@
 class Agent {
   late int id;
-  late int roleId;
+  late String roleId;
   late String firstName;
   late String email;
   late String avatar;
@@ -14,7 +14,7 @@ class Agent {
   Agent.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     roleId = json['role_id'];
-    firstName = json['first_name'];
+    firstName = json['name'];
     email = json['email'];
     avatar = json['avatar'];
     type = json['type'];

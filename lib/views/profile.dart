@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
+import 'package:installation/views/home.dart';
 import 'package:installation/views/notification.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'edit_profile.dart';
@@ -22,6 +23,9 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: () => Get.off(Home()),
+        ),
         title: Text("Profile"),
       ),
       body: Column(
@@ -64,7 +68,7 @@ class Profile extends StatelessWidget {
         ),
         FxSpacing.height(24),
         FxText.titleLarge(
-          '${users['first_name'] + ' ' + users['last_name']}',
+          '${users['first_name'] ?? '' + ' ' + users['last_name']}',
           textAlign: TextAlign.center,
           fontWeight: 600,
           letterSpacing: 0.8,

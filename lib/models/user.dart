@@ -1,8 +1,8 @@
 class User {
   late int id;
-  late String firstname;
-  late String lastname;
-  late String mobile;
+  String? first_name;
+  String? last_name;
+  String? phone;
   late String email;
   late String avatar;
   late String full_name;
@@ -10,10 +10,10 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    firstname = json['firstname'];
-    lastname = json['lastname'];
+    first_name = json['first_name'];
+    last_name = json['last_name'];
     email = json['email'];
     avatar = json['avatar'];
-    mobile = json['mobile'];
+    phone = json['phone'];
   }
 } //end of model
