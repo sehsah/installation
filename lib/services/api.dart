@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 
 class Api {
   static final dio = Dio(BaseOptions(
-      baseUrl: 'https://www.quikrev.com/ins/api',
+      baseUrl: 'https://www.quikrev.com/installation/api',
       receiveDataWhenStatusError: true,
       headers: {
         'Accept': 'application/json',
