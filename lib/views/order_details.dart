@@ -356,760 +356,768 @@ class _OrderDetails extends State<OrderDetails>
   }
 
   Widget SiteWdiget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10),
-          child: Text("Site Information",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(top: 5),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Site Name ".toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.bold)),
-                ),
-              ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10),
+            child: Text("Site Information",
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(top: 5),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Site Name ".toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(homeController.order.value!.site.name,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.normal)),
-                )
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(homeController.order.value!.site.name,
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.normal)),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          color: Colors.grey[200],
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 0, top: 0),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Apartment Number".toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.bold)),
-                ),
-              ],
+          Container(
+            color: Colors.grey[200],
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 0, top: 0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Apartment Number".toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                      "${homeController.order.value!.site.apartmentNumber}",
-                      style: TextStyle(color: Colors.grey, fontSize: 14.0)),
-                )
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                        "${homeController.order.value!.site.apartmentNumber}",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0)),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          color: Colors.grey[200],
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 0, top: 0),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Street Name".toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.bold)),
-                ),
-              ],
+          Container(
+            color: Colors.grey[200],
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 0, top: 0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Street Name".toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("${homeController.order.value!.site.street}",
-                      style: TextStyle(color: Colors.grey, fontSize: 14.0)),
-                )
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("${homeController.order.value!.site.street}",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0)),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          color: Colors.grey[200],
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 0, top: 0),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Additional Direction".toUpperCase(),
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.bold)),
-                ),
-              ],
+          Container(
+            color: Colors.grey[200],
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 0, top: 0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Additional Direction".toUpperCase(),
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.bold)),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text(
-                      "${homeController.order.value!.site.additionalDirection}",
-                      style: TextStyle(color: Colors.grey, fontSize: 14.0)),
-                )
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                        "${homeController.order.value!.site.additionalDirection}",
+                        style: TextStyle(color: Colors.grey, fontSize: 14.0)),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("City : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Expanded(
-                  child: Text("${homeController.order.value!.site.city}",
-                      style: TextStyle(fontSize: 14.0)),
-                )
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("City : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Expanded(
+                    child: Text("${homeController.order.value!.site.city}",
+                        style: TextStyle(fontSize: 14.0)),
+                  )
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Country : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${homeController.order.value!.site.country}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Country : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${homeController.order.value!.site.country}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15, right: 15),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Palette.maincolor, // Background color
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin:
+                EdgeInsets.only(top: 10.0, bottom: 10.0, left: 15, right: 15),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Palette.maincolor, // Background color
+              ),
+              onPressed: () => _openMaps(),
+              child: Text('Open Location '),
             ),
-            onPressed: () => _openMaps(),
-            child: Text('Open Location '),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget DetailsWdiget() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10),
-          child: Text("Order Details",
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Work Order : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${homeController.order.value!.work_name}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 10.0, bottom: 10.0, left: 10),
+            child: Text("Order Details",
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Work Order : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${homeController.order.value!.work_name}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Work Order Status : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${homeController.order.value?.status}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Work Order Status : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${homeController.order.value?.status}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Assigned To: ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text("${homeController.order.value!.agent?.firstName}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Assigned To: ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text("${homeController.order.value!.agent?.firstName}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Preferred Date : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text(
-                    "${homeController.order.value!.date!.weekday}/${homeController.order.value!.date!.month}/${homeController.order.value!.date!.year}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Preferred Date : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(
+                      "${homeController.order.value!.date!.weekday}/${homeController.order.value!.date!.month}/${homeController.order.value!.date!.year}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Preferred Time : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text(" ${homeController.order.value!.time}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Preferred Time : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(" ${homeController.order.value!.time}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Connection Type : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text(" ${homeController.order.value!.connectionType}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Connection Type : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(" ${homeController.order.value!.connectionType}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          color: Colors.grey[200],
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Connection Number : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text(" ${homeController.order.value!.connectionNumber}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            color: Colors.grey[200],
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Connection Number : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(" ${homeController.order.value!.connectionNumber}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.only(bottom: 5, top: 10),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Text("Charger : ",
-                      style: TextStyle(
-                          fontSize: 14.0, fontWeight: FontWeight.w500)),
-                ),
-                Text(" ${homeController.order.value!.charger}",
-                    style: TextStyle(fontSize: 14.0))
-              ],
+          Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(bottom: 5, top: 10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text("Charger : ",
+                        style: TextStyle(
+                            fontSize: 14.0, fontWeight: FontWeight.w500)),
+                  ),
+                  Text(" ${homeController.order.value!.charger}",
+                      style: TextStyle(fontSize: 14.0))
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
   Widget ActionsWdiget() {
     print(homeController.order.value!.agent);
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: homeController.order.value!.status_key == "COMPLETED"
-              ? Center(
-                  child: Text(
-                  "This Site is Completed",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ))
-              : homeController.order.value!.agent != null
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextFormField(
-                          controller: _commentController,
-                          decoration: InputDecoration(
-                            labelText: "Comment",
-                            border: theme.inputDecorationTheme.border,
-                            enabledBorder: theme.inputDecorationTheme.border,
-                            focusedBorder:
-                                theme.inputDecorationTheme.focusedBorder,
-                          ),
-                        ),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? Container(
-                                margin: EdgeInsets.only(top: 8),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  controller: _cable_lengthController,
-                                  decoration: InputDecoration(
-                                    labelText: "Cable Length",
-                                    border: theme.inputDecorationTheme.border,
-                                    enabledBorder:
-                                        theme.inputDecorationTheme.border,
-                                    focusedBorder: theme
-                                        .inputDecorationTheme.focusedBorder,
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? Container(
-                                margin: EdgeInsets.only(top: 8),
-                                child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  controller: _pvc_lengthController,
-                                  decoration: InputDecoration(
-                                    labelText: "PVC Trunking Length",
-                                    border: theme.inputDecorationTheme.border,
-                                    enabledBorder:
-                                        theme.inputDecorationTheme.border,
-                                    focusedBorder: theme
-                                        .inputDecorationTheme.focusedBorder,
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                        FxSpacing.height(10),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? DropdownButton(
-                                isExpanded: true,
-                                value: cable_type,
-                                items: dropdownItemsCableType,
-                                onChanged: (value) {
-                                  setState(() {
-                                    cable_type = value!;
-                                  });
-                                },
-                              )
-                            : Container(),
-                        FxSpacing.height(10),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? DropdownButton(
-                                isExpanded: true,
-                                value: breaker,
-                                items: dropdownItemsBreaker,
-                                onChanged: (value) {
-                                  setState(() {
-                                    breaker = value!;
-                                  });
-                                },
-                              )
-                            : Container(),
-                        FxSpacing.height(10),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? SwitchListTile(
-                                activeColor: Palette.maincolor,
-                                dense: true,
-                                contentPadding: FxSpacing.zero,
-                                title: FxText.bodyMedium(
-                                  "Consumption Meter",
-                                  letterSpacing: 0,
-                                ),
-                                onChanged: (val) {
-                                  setState(() {
-                                    consumption_meter == false
-                                        ? consumption_meter = true
-                                        : consumption_meter = false;
-                                  });
-                                },
-                                value: consumption_meter,
-                              )
-                            : Container(),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? SwitchListTile(
-                                activeColor: Palette.maincolor,
-                                dense: true,
-                                contentPadding: FxSpacing.zero,
-                                title: FxText.bodyMedium(
-                                  "Industrial Socket",
-                                  letterSpacing: 0,
-                                ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    industrial_socket == false
-                                        ? industrial_socket = true
-                                        : industrial_socket = false;
-                                  });
-                                },
-                                value: industrial_socket,
-                              )
-                            : Container(),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? SwitchListTile(
-                                activeColor: Palette.maincolor,
-                                dense: true,
-                                contentPadding: FxSpacing.zero,
-                                title: FxText.bodyMedium(
-                                  "Isolator",
-                                  letterSpacing: 0,
-                                ),
-                                onChanged: (value) {
-                                  setState(() {
-                                    isolator == false
-                                        ? isolator = true
-                                        : isolator = false;
-                                  });
-                                },
-                                value: isolator,
-                              )
-                            : Container(),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 10),
-                                child: GFBorder(
-                                  radius: Radius.circular(20),
-                                  color: Palette.maincolor,
-                                  dashedLine: [3, 0],
-                                  child: InkWell(
-                                    onTap: () =>
-                                        _showChoiceDialog(context, image),
-                                    child: image == null
-                                        ? Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 100,
-                                            color: Palette.maincolor,
-                                            child: Center(
-                                                child: GFButton(
-                                              textColor: Colors.white,
-                                              onPressed: null,
-                                              color: Palette.maincolor,
-                                              text: "Upload File",
-                                              icon: Icon(
-                                                Icons.upload,
-                                                color: Colors.white,
-                                              ),
-                                            )),
-                                          )
-                                        : InkWell(
-                                            onTap: () => _showChoiceDialog(
-                                                context, image),
-                                            child: Image.file(
-                                              image!,
-                                              width: 100.0,
-                                              height: 100.0,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 10),
-                                child: GFBorder(
-                                  radius: Radius.circular(20),
-                                  color: Palette.maincolor,
-                                  dashedLine: [3, 0],
-                                  child: InkWell(
-                                    onTap: () =>
-                                        _showChoiceDialog(context, image2),
-                                    child: image2 == null
-                                        ? Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 100,
-                                            color: Palette.maincolor,
-                                            child: Center(
-                                                child: GFButton(
-                                              textColor: Colors.white,
-                                              onPressed: null,
-                                              color: Palette.maincolor,
-                                              text: "Upload File",
-                                              icon: Icon(
-                                                Icons.upload,
-                                                color: Colors.white,
-                                              ),
-                                            )),
-                                          )
-                                        : InkWell(
-                                            onTap: () => _showChoiceDialog(
-                                                context, image2),
-                                            child: Image.file(
-                                              image!,
-                                              width: 100.0,
-                                              height: 100.0,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                        homeController.order.value!.status ==
-                                'Customer Contacted'
-                            ? Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 10),
-                                child: GFBorder(
-                                  radius: Radius.circular(20),
-                                  color: Palette.maincolor,
-                                  dashedLine: [3, 0],
-                                  child: InkWell(
-                                    onTap: () =>
-                                        _showChoiceDialog(context, image3),
-                                    child: image3 == null
-                                        ? Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 100,
-                                            color: Palette.maincolor,
-                                            child: Center(
-                                                child: GFButton(
-                                              textColor: Colors.white,
-                                              onPressed: null,
-                                              color: Palette.maincolor,
-                                              text: "Upload File",
-                                              icon: Icon(
-                                                Icons.upload,
-                                                color: Colors.white,
-                                              ),
-                                            )),
-                                          )
-                                        : InkWell(
-                                            onTap: () => _showChoiceDialog(
-                                                context, image3),
-                                            child: Image.file(
-                                              image!,
-                                              width: 100.0,
-                                              height: 100.0,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                  ),
-                                ),
-                              )
-                            : Container(),
-                        Container(
-                          margin: EdgeInsets.only(top: 16),
-                          alignment: Alignment.center,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color:
-                                      theme.colorScheme.primary.withAlpha(28),
-                                  blurRadius: 4,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: homeController.order.value!.status_key == "COMPLETED"
+                ? Center(
+                    child: Text(
+                    "This Site is Completed",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ))
+                : homeController.order.value!.agent != null
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextFormField(
+                            controller: _commentController,
+                            decoration: InputDecoration(
+                              labelText: "Comment",
+                              border: theme.inputDecorationTheme.border,
+                              enabledBorder: theme.inputDecorationTheme.border,
+                              focusedBorder:
+                                  theme.inputDecorationTheme.focusedBorder,
                             ),
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  if (_commentController.text == "") {
-                                    Get.snackbar(
-                                      "Error",
-                                      "Please Enter Comment",
-                                    );
-                                    return;
-                                  }
-                                  _ActionData['comment'] =
-                                      _commentController.text;
-                                  _ActionData['cable_length'] =
-                                      _cable_lengthController.text;
-                                  _ActionData['pvc_length'] =
-                                      _pvc_lengthController.text;
-                                  _ActionData['cable_type'] = cable_type;
-                                  _ActionData['breaker'] = breaker;
-                                  _ActionData['consumption_meter'] =
-                                      consumption_meter == false ? 0 : 1;
-                                  _ActionData['industrial_socket'] =
-                                      industrial_socket == false ? 0 : 1;
-                                  _ActionData['isolator'] =
-                                      isolator == false ? 0 : 1;
-                                  _ActionData['user_id'] = GetStorage()
-                                      .read('logged_user')['id']
-                                      .toString();
-                                  _ActionData['order_id'] =
-                                      homeController.order.value!.id;
-                                  _ActionData['image1'] = image != null
-                                      ? "data:image/png;base64,${base64Encode(image!.readAsBytesSync())}"
-                                      : "";
-                                  _ActionData['image2'] = image2 != null
-                                      ? "data:image/png;base64,${base64Encode(image2!.readAsBytesSync())}"
-                                      : "";
-                                  _ActionData['image3'] = image3 != null
-                                      ? "data:image/png;base64,${base64Encode(image3!.readAsBytesSync())}"
-                                      : "";
-                                  print(_ActionData);
-
-                                  _commentController.clear();
-                                  _pvc_lengthController.clear();
-                                  cable_type = "null";
-                                  breaker = "null";
-                                  consumption_meter = false;
-                                  industrial_socket = false;
-                                  isolator = false;
-                                  image = null;
-                                  image2 = null;
-                                  image3 = null;
-                                  homeController.addLog(
-                                      Data: _ActionData, context: context);
-                                },
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Palette.maincolor),
-                                    padding: MaterialStateProperty.all(
-                                        FxSpacing.xy(16, 0))),
-                                child: FxText.bodyMedium(
-                                    "Update To ${homeController.order.value!.new_step}",
-                                    fontWeight: 700,
-                                    letterSpacing: 0.2,
-                                    color: Colors.white)),
                           ),
-                        ),
-                      ],
-                    )
-                  : InkWell(
-                      onTap: () {
-                        _Data['id'] = homeController.order.value!.id;
-                        homeController.AcceptOrder(Data: _Data);
-                      },
-                      child: FxButton(
-                        backgroundColor: Palette.maincolor,
-                        child: Text(
-                          "Accept",
-                          style: TextStyle(color: Colors.white),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? Container(
+                                  margin: EdgeInsets.only(top: 8),
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    controller: _cable_lengthController,
+                                    decoration: InputDecoration(
+                                      labelText: "Cable Length",
+                                      border: theme.inputDecorationTheme.border,
+                                      enabledBorder:
+                                          theme.inputDecorationTheme.border,
+                                      focusedBorder: theme
+                                          .inputDecorationTheme.focusedBorder,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? Container(
+                                  margin: EdgeInsets.only(top: 8),
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    controller: _pvc_lengthController,
+                                    decoration: InputDecoration(
+                                      labelText: "PVC Trunking Length",
+                                      border: theme.inputDecorationTheme.border,
+                                      enabledBorder:
+                                          theme.inputDecorationTheme.border,
+                                      focusedBorder: theme
+                                          .inputDecorationTheme.focusedBorder,
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          FxSpacing.height(10),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? DropdownButton(
+                                  isExpanded: true,
+                                  value: cable_type,
+                                  items: dropdownItemsCableType,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      cable_type = value!;
+                                    });
+                                  },
+                                )
+                              : Container(),
+                          FxSpacing.height(10),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? DropdownButton(
+                                  isExpanded: true,
+                                  value: breaker,
+                                  items: dropdownItemsBreaker,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      breaker = value!;
+                                    });
+                                  },
+                                )
+                              : Container(),
+                          FxSpacing.height(10),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? SwitchListTile(
+                                  activeColor: Palette.maincolor,
+                                  dense: true,
+                                  contentPadding: FxSpacing.zero,
+                                  title: FxText.bodyMedium(
+                                    "Consumption Meter",
+                                    letterSpacing: 0,
+                                  ),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      consumption_meter == false
+                                          ? consumption_meter = true
+                                          : consumption_meter = false;
+                                    });
+                                  },
+                                  value: consumption_meter,
+                                )
+                              : Container(),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? SwitchListTile(
+                                  activeColor: Palette.maincolor,
+                                  dense: true,
+                                  contentPadding: FxSpacing.zero,
+                                  title: FxText.bodyMedium(
+                                    "Industrial Socket",
+                                    letterSpacing: 0,
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      industrial_socket == false
+                                          ? industrial_socket = true
+                                          : industrial_socket = false;
+                                    });
+                                  },
+                                  value: industrial_socket,
+                                )
+                              : Container(),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? SwitchListTile(
+                                  activeColor: Palette.maincolor,
+                                  dense: true,
+                                  contentPadding: FxSpacing.zero,
+                                  title: FxText.bodyMedium(
+                                    "Isolator",
+                                    letterSpacing: 0,
+                                  ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isolator == false
+                                          ? isolator = true
+                                          : isolator = false;
+                                    });
+                                  },
+                                  value: isolator,
+                                )
+                              : Container(),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 10),
+                                  child: GFBorder(
+                                    radius: Radius.circular(20),
+                                    color: Palette.maincolor,
+                                    dashedLine: [3, 0],
+                                    child: InkWell(
+                                      onTap: () =>
+                                          _showChoiceDialog(context, image),
+                                      child: image == null
+                                          ? Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 100,
+                                              color: Palette.maincolor,
+                                              child: Center(
+                                                  child: GFButton(
+                                                textColor: Colors.white,
+                                                onPressed: null,
+                                                color: Palette.maincolor,
+                                                text: "Upload File",
+                                                icon: Icon(
+                                                  Icons.upload,
+                                                  color: Colors.white,
+                                                ),
+                                              )),
+                                            )
+                                          : InkWell(
+                                              onTap: () => _showChoiceDialog(
+                                                  context, image),
+                                              child: Image.file(
+                                                image!,
+                                                width: 100.0,
+                                                height: 100.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 10),
+                                  child: GFBorder(
+                                    radius: Radius.circular(20),
+                                    color: Palette.maincolor,
+                                    dashedLine: [3, 0],
+                                    child: InkWell(
+                                      onTap: () =>
+                                          _showChoiceDialog(context, image2),
+                                      child: image2 == null
+                                          ? Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 100,
+                                              color: Palette.maincolor,
+                                              child: Center(
+                                                  child: GFButton(
+                                                textColor: Colors.white,
+                                                onPressed: null,
+                                                color: Palette.maincolor,
+                                                text: "Upload File",
+                                                icon: Icon(
+                                                  Icons.upload,
+                                                  color: Colors.white,
+                                                ),
+                                              )),
+                                            )
+                                          : InkWell(
+                                              onTap: () => _showChoiceDialog(
+                                                  context, image2),
+                                              child: Image.file(
+                                                image!,
+                                                width: 100.0,
+                                                height: 100.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          homeController.order.value!.status ==
+                                  'Customer Contacted'
+                              ? Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 10),
+                                  child: GFBorder(
+                                    radius: Radius.circular(20),
+                                    color: Palette.maincolor,
+                                    dashedLine: [3, 0],
+                                    child: InkWell(
+                                      onTap: () =>
+                                          _showChoiceDialog(context, image3),
+                                      child: image3 == null
+                                          ? Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 100,
+                                              color: Palette.maincolor,
+                                              child: Center(
+                                                  child: GFButton(
+                                                textColor: Colors.white,
+                                                onPressed: null,
+                                                color: Palette.maincolor,
+                                                text: "Upload File",
+                                                icon: Icon(
+                                                  Icons.upload,
+                                                  color: Colors.white,
+                                                ),
+                                              )),
+                                            )
+                                          : InkWell(
+                                              onTap: () => _showChoiceDialog(
+                                                  context, image3),
+                                              child: Image.file(
+                                                image!,
+                                                width: 100.0,
+                                                height: 100.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          Container(
+                            margin: EdgeInsets.only(top: 16),
+                            alignment: Alignment.center,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        theme.colorScheme.primary.withAlpha(28),
+                                    blurRadius: 4,
+                                    offset: Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
+                              ),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    if (_commentController.text == "") {
+                                      Get.snackbar(
+                                        "Error",
+                                        "Please Enter Comment",
+                                      );
+                                      return;
+                                    }
+                                    _ActionData['comment'] =
+                                        _commentController.text;
+                                    _ActionData['cable_length'] =
+                                        _cable_lengthController.text;
+                                    _ActionData['pvc_length'] =
+                                        _pvc_lengthController.text;
+                                    _ActionData['cable_type'] = cable_type;
+                                    _ActionData['breaker'] = breaker;
+                                    _ActionData['consumption_meter'] =
+                                        consumption_meter == false ? 0 : 1;
+                                    _ActionData['industrial_socket'] =
+                                        industrial_socket == false ? 0 : 1;
+                                    _ActionData['isolator'] =
+                                        isolator == false ? 0 : 1;
+                                    _ActionData['user_id'] = GetStorage()
+                                        .read('logged_user')['id']
+                                        .toString();
+                                    _ActionData['order_id'] =
+                                        homeController.order.value!.id;
+                                    _ActionData['image1'] = image != null
+                                        ? "data:image/png;base64,${base64Encode(image!.readAsBytesSync())}"
+                                        : "";
+                                    _ActionData['image2'] = image2 != null
+                                        ? "data:image/png;base64,${base64Encode(image2!.readAsBytesSync())}"
+                                        : "";
+                                    _ActionData['image3'] = image3 != null
+                                        ? "data:image/png;base64,${base64Encode(image3!.readAsBytesSync())}"
+                                        : "";
+                                    print(_ActionData);
+
+                                    _commentController.clear();
+                                    _pvc_lengthController.clear();
+                                    cable_type = "null";
+                                    breaker = "null";
+                                    consumption_meter = false;
+                                    industrial_socket = false;
+                                    isolator = false;
+                                    image = null;
+                                    image2 = null;
+                                    image3 = null;
+                                    homeController.addLog(
+                                        Data: _ActionData, context: context);
+                                  },
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              Palette.maincolor),
+                                      padding: MaterialStateProperty.all(
+                                          FxSpacing.xy(16, 0))),
+                                  child: FxText.bodyMedium(
+                                      "Update To ${homeController.order.value!.new_step}",
+                                      fontWeight: 700,
+                                      letterSpacing: 0.2,
+                                      color: Colors.white)),
+                            ),
+                          ),
+                        ],
+                      )
+                    : InkWell(
+                        onTap: () {
+                          _Data['id'] = homeController.order.value!.id;
+                          homeController.AcceptOrder(Data: _Data);
+                        },
+                        child: FxButton(
+                          backgroundColor: Palette.maincolor,
+                          child: Text(
+                            "Accept",
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ),
-                    ),
+          ),
         ),
       ),
     );
