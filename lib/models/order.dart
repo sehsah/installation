@@ -10,7 +10,7 @@ class Order {
   late String work_name;
   late Agent? agent;
   late Customer? customer;
-  late Site site;
+  late Site? site;
   late DateTime? date;
   late String time;
   late String connectionType;
@@ -35,7 +35,7 @@ class Order {
     agent = json['agent'] != null ? Agent.fromJson(json['agent']) : null;
     customer =
         json['customer'] != null ? Customer.fromJson(json['customer']) : null;
-    site = (json['site'] != null ? Site.fromJson(json['site']) : null)!;
+    site = json['site'] != null ? Site.fromJson(json['site']) : null;
     date = DateTime.parse(json['date']);
     time = json['time'];
     connectionType = json['connection_type'];

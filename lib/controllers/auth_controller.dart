@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:installation/config/palette.dart';
+import 'package:installation/controllers/home_controller.dart';
 import 'package:installation/models/user.dart';
 import 'package:installation/responses/user_response.dart';
 import 'package:installation/services/api.dart';
@@ -26,6 +27,7 @@ class AuthController extends GetxController with BaseController {
 
   Future<void> redirect() async {
     var token = await GetStorage().read('login_token');
+    print(token);
     if (token != null) {
       Get.offAll(() => Home());
     } else {
@@ -44,11 +46,10 @@ class AuthController extends GetxController with BaseController {
     } else {
       var userResponse = UserResponse.fromJson(response.data);
       GetStorage().write('login_token', userResponse.token);
-      // user.value = userResponse.user;
-      // isLoggedIn.value = true;
       hideLoading();
-
-      Get.off(() => Home());
+      Get.to(Home());
+      Get.find<HomeController>().getOrder();
+      //Get.off(() => Home());
     }
   } //end of login
 

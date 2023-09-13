@@ -391,7 +391,7 @@ class _OrderDetails extends State<OrderDetails>
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text(homeController.order.value!.site.name,
+                    child: Text(homeController.order.value!.site!.name,
                         style: TextStyle(
                             color: Colors.grey,
                             fontSize: 14.0,
@@ -428,7 +428,7 @@ class _OrderDetails extends State<OrderDetails>
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                        "${homeController.order.value!.site.apartmentNumber}",
+                        "${homeController.order.value!.site!.apartmentNumber}",
                         style: TextStyle(color: Colors.grey, fontSize: 14.0)),
                   )
                 ],
@@ -461,7 +461,7 @@ class _OrderDetails extends State<OrderDetails>
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
-                    child: Text("${homeController.order.value!.site.street}",
+                    child: Text("${homeController.order.value!.site!.street}",
                         style: TextStyle(color: Colors.grey, fontSize: 14.0)),
                   )
                 ],
@@ -495,7 +495,7 @@ class _OrderDetails extends State<OrderDetails>
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                        "${homeController.order.value!.site.additionalDirection}",
+                        "${homeController.order.value!.site!.additionalDirection}",
                         style: TextStyle(color: Colors.grey, fontSize: 14.0)),
                   )
                 ],
@@ -517,7 +517,7 @@ class _OrderDetails extends State<OrderDetails>
                             fontSize: 14.0, fontWeight: FontWeight.w500)),
                   ),
                   Expanded(
-                    child: Text("${homeController.order.value!.site.city}",
+                    child: Text("${homeController.order.value!.site!.city}",
                         style: TextStyle(fontSize: 14.0)),
                   )
                 ],
@@ -537,7 +537,7 @@ class _OrderDetails extends State<OrderDetails>
                         style: TextStyle(
                             fontSize: 14.0, fontWeight: FontWeight.w500)),
                   ),
-                  Text("${homeController.order.value!.site.country}",
+                  Text("${homeController.order.value!.site!.country}",
                       style: TextStyle(fontSize: 14.0))
                 ],
               ),
@@ -1184,10 +1184,10 @@ class _OrderDetails extends State<OrderDetails>
 
   Future<void> _openMaps() async {
     Uri googleMapsUrl = Uri.parse(
-        "google.navigation:q=${homeController.order.value!.site.lat},${homeController.order.value!.site.long}&mode=d");
+        "google.navigation:q=${homeController.order.value!.site!.lat},${homeController.order.value!.site!.long}&mode=d");
     print(googleMapsUrl);
     final url =
-        'https://www.google.com/maps/dir/?api=1&destination=${homeController.order.value!.site.lat},${homeController.order.value!.site.long}';
+        'https://www.google.com/maps/dir/?api=1&destination=${homeController.order.value!.site!.lat},${homeController.order.value!.site!.long}';
 
     if (await canLaunch(url)) {
       await launch(url);

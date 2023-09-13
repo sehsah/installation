@@ -51,7 +51,7 @@ class _EditProfileState extends State<EditProfile> {
         ? _textEditlastname.text = users['last_name']
         : '';
     users['last_name'] != null ? _textEditEmail.text = users['email'] : '';
-    users['last_name'] != null ? _textEditPhone.text = users['phone'] : '';
+    users['phone'] != null ? _textEditPhone.text = users['phone'] : '';
   }
 
   @override

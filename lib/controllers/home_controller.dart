@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutx/flutx.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/base_controller.dart';
 import 'package:installation/models/order.dart';
@@ -13,8 +14,6 @@ class HomeController extends GetxController with BaseController {
   RxBool isLoading = true.obs;
   RxList<Order> orders = <Order>[].obs;
   RxList<Order> orders2 = <Order>[].obs;
-  //final Rx<Order> order = Order().obs;
-  //late final Rx<Order?> order;
   final order = Rx<Order?>(null);
   RxBool isLoadingDetails = true.obs;
 
@@ -22,6 +21,10 @@ class HomeController extends GetxController with BaseController {
   void onInit() {
     super.onInit();
     getOrder();
+  }
+
+  Future<void> refreshData() async {
+    await getOrder();
   }
 
   Future<void> getOrder() async {
@@ -36,11 +39,6 @@ class HomeController extends GetxController with BaseController {
   }
 
   getOrderDetails(id) async {
-    // isLoadingDetails.value = true;
-    // var response = await Api.OrderDetails(id);
-    // var orderResponse = OrderResponseDetails.fromJson(response.data);
-    // order.value = orderResponse.data;
-    // isLoadingDetails.value = false;
     isLoadingDetails.value = true;
     try {
       var response = await Api.OrderDetails(id);

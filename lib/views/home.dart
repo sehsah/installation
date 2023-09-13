@@ -8,6 +8,7 @@ import 'package:installation/views/notification.dart';
 import 'package:installation/views/order_details.dart';
 import 'package:installation/views/profile.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -18,8 +19,16 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
   final homeController = Get.put(HomeController());
-
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
   late final users = GetStorage().read('logged_user');
+
+  @override
+  void initState() {
+    super.initState();
+    print('Home initState called');
+    homeController.refresh();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,40 +56,47 @@ class _Home extends State<Home> {
               )
             ],
           ),
-          body: SingleChildScrollView(
-            child: Container(
-              color: Color.fromARGB(255, 243, 243, 243),
-              child: Padding(
-                padding: FxSpacing.fromLTRB(24, 8, 24, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FxSpacing.height(16),
-                    FxText.titleMedium(
-                      'New Orders',
-                      letterSpacing: 0.5,
-                      fontWeight: 700,
-                    ),
-                    FxSpacing.height(16),
-                    Container(
-                        child: posts(
-                      isLoading: homeController.isLoading.value,
-                      orders: homeController.orders2,
-                    )),
-                    FxSpacing.height(16),
-                    FxText.titleMedium(
-                      'My Orders',
-                      letterSpacing: 0.5,
-                      fontWeight: 700,
-                    ),
-                    FxSpacing.height(16),
-                    Container(
-                        child: posts(
-                      isLoading: homeController.isLoading.value,
-                      orders: homeController.orders,
-                    )),
-                    FxSpacing.height(24),
-                  ],
+          body: SmartRefresher(
+            enablePullDown: true,
+            enablePullUp: true,
+            controller: _refreshController,
+            onRefresh: _onRefresh,
+            onLoading: _onLoading,
+            child: SingleChildScrollView(
+              child: Container(
+                color: Color.fromARGB(255, 243, 243, 243),
+                child: Padding(
+                  padding: FxSpacing.fromLTRB(24, 8, 24, 24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FxSpacing.height(16),
+                      FxText.titleMedium(
+                        'New Orders',
+                        letterSpacing: 0.5,
+                        fontWeight: 700,
+                      ),
+                      FxSpacing.height(16),
+                      Container(
+                          child: posts(
+                        isLoading: homeController.isLoading.value,
+                        orders: homeController.orders2,
+                      )),
+                      FxSpacing.height(16),
+                      FxText.titleMedium(
+                        'My Orders',
+                        letterSpacing: 0.5,
+                        fontWeight: 700,
+                      ),
+                      FxSpacing.height(16),
+                      Container(
+                          child: posts(
+                        isLoading: homeController.isLoading.value,
+                        orders: homeController.orders,
+                      )),
+                      FxSpacing.height(24),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -90,6 +106,16 @@ class _Home extends State<Home> {
 
   Future<void> _refreshProducts(BuildContext context) async {
     return homeController.getOrder();
+  }
+
+  void _onLoading() async {
+    homeController.getOrder();
+    _refreshController.loadComplete();
+  }
+
+  void _onRefresh() async {
+    homeController.getOrder();
+    _refreshController.refreshCompleted();
   }
 
   Widget posts({
@@ -149,12 +175,12 @@ class _Home extends State<Home> {
                                 Row(
                                   children: [
                                     FxText.bodySmall(
-                                      orders[index].customer!.firstName,
+                                      orders[index].customer!.firstName ?? '',
                                       fontWeight: 600,
                                     ),
                                     FxSpacing.width(4),
                                     FxText.bodySmall(
-                                      orders[index].customer!.lastName,
+                                      orders[index].customer!.lastName ?? '',
                                       fontWeight: 600,
                                     ),
                                   ],
@@ -173,7 +199,9 @@ class _Home extends State<Home> {
                                     ),
                                     FxSpacing.width(2),
                                     FxText.bodySmall(
-                                      orders[index].site.city,
+                                      orders[index].site != null
+                                          ? orders[index].site!.city
+                                          : '',
                                       fontSize: 10,
                                     ),
                                   ],
