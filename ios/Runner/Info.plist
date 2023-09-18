@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -17,17 +19,33 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>2.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>1.1</string>
 	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to the camera.To able to change profile picture</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Application requires user’s location for better user experience.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Application requires user’s location for better user experience.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Application requires user’s location for better user experience.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to photo library to change profile image</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to photo library to change profile image</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -43,23 +61,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to photo library to change profile image</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need access to photo library to change profile image</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to the camera.To able to change profile picture</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Application requires user’s location for better user experience.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Application requires user’s location for better user experience.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Application requires user’s location for better user experience.</string>
-	<key>UIStatusBarHidden</key>
-	<true/>
 </dict>
 </plist>

@@ -8,8 +8,8 @@ class Agent {
   late String createdAt;
   late String updatedAt;
   late String lastName;
-  late String phone;
-  late String company;
+  String? phone;
+  String? company;
 
   Agent.fromJson(Map<String, dynamic> json) {
     id = json['id'];

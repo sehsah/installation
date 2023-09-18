@@ -127,104 +127,108 @@ class _Home extends State<Home> {
             padding: const EdgeInsets.all(30.0),
             child: Center(child: CircularProgressIndicator()),
           )
-        : SingleChildScrollView(
-            child: ListView.separated(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount: orders.length,
-              physics: ClampingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return InkWell(
-                    onTap: () => {Get.to(OrderDetails(orders[index].id))},
-                    child: FxContainer.bordered(
-                      color: Colors.white,
-                      paddingAll: 16,
-                      borderRadiusAll: 16,
-                      child: Row(
-                        children: [
-                          FxContainer(
-                              width: 56,
-                              padding: FxSpacing.y(12),
-                              borderRadiusAll: 4,
-                              bordered: true,
-                              color: Color.fromARGB(0, 0, 0, 0),
-                              child: Center(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    FxText.bodyMedium(
-                                      "${orders[index].date!.month}" +
-                                          "/" +
-                                          DateFormat('d')
+        : orders.isNotEmpty
+            ? SingleChildScrollView(
+                child: ListView.separated(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: orders.length,
+                  physics: ClampingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                        onTap: () => {Get.to(OrderDetails(orders[index].id))},
+                        child: FxContainer.bordered(
+                          color: Colors.white,
+                          paddingAll: 16,
+                          borderRadiusAll: 16,
+                          child: Row(
+                            children: [
+                              FxContainer(
+                                  width: 56,
+                                  padding: FxSpacing.y(12),
+                                  borderRadiusAll: 4,
+                                  bordered: true,
+                                  color: Color.fromARGB(0, 0, 0, 0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        FxText.bodyMedium(
+                                          "${orders[index].date!.month}" +
+                                              "/" +
+                                              DateFormat('d')
+                                                  .format(orders[index].date!),
+                                          fontWeight: 700,
+                                        ),
+                                        FxText.bodySmall(
+                                          DateFormat('EEE')
                                               .format(orders[index].date!),
-                                      fontWeight: 700,
+                                          fontWeight: 600,
+                                        ),
+                                      ],
                                     ),
-                                    FxText.bodySmall(
-                                      DateFormat('EEE')
-                                          .format(orders[index].date!),
-                                      fontWeight: 600,
-                                    ),
-                                  ],
-                                ),
-                              )),
-                          FxSpacing.width(16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
+                                  )),
+                              FxSpacing.width(16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    FxText.bodySmall(
-                                      orders[index].customer!.firstName ?? '',
-                                      fontWeight: 600,
+                                    Row(
+                                      children: [
+                                        FxText.bodySmall(
+                                          orders[index].customer!.firstName ??
+                                              '',
+                                          fontWeight: 600,
+                                        ),
+                                        FxSpacing.width(4),
+                                        FxText.bodySmall(
+                                          orders[index].customer!.lastName ??
+                                              '',
+                                          fontWeight: 600,
+                                        ),
+                                      ],
                                     ),
-                                    FxSpacing.width(4),
+                                    FxSpacing.height(4),
                                     FxText.bodySmall(
-                                      orders[index].customer!.lastName ?? '',
-                                      fontWeight: 600,
-                                    ),
-                                  ],
-                                ),
-                                FxSpacing.height(4),
-                                FxText.bodySmall(
-                                  orders[index].status ?? '',
-                                  fontSize: 10,
-                                ),
-                                FxSpacing.height(4),
-                                Row(
-                                  children: [
-                                    Icon(
-                                      Icons.location_on,
-                                      size: 16,
-                                    ),
-                                    FxSpacing.width(2),
-                                    FxText.bodySmall(
-                                      orders[index].site != null
-                                          ? orders[index].site!.city
-                                          : '',
+                                      orders[index].status ?? '',
                                       fontSize: 10,
                                     ),
+                                    FxSpacing.height(4),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.location_on,
+                                          size: 16,
+                                        ),
+                                        FxSpacing.width(2),
+                                        FxText.bodySmall(
+                                          orders[index].site != null
+                                              ? orders[index].site!.city
+                                              : '',
+                                          fontSize: 10,
+                                        ),
+                                      ],
+                                    )
                                   ],
-                                )
-                              ],
-                            ),
+                                ),
+                              ),
+                              FxSpacing.width(16),
+                              FxContainer.rounded(
+                                paddingAll: 4,
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  size: 16,
+                                ),
+                              ),
+                            ],
                           ),
-                          FxSpacing.width(16),
-                          FxContainer.rounded(
-                            paddingAll: 4,
-                            child: Icon(
-                              Icons.arrow_forward,
-                              size: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ));
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return FxSpacing.height(16);
-              },
-            ),
-          );
+                        ));
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return FxSpacing.height(16);
+                  },
+                ),
+              )
+            : Center(child: Text("No Orders"));
   }
 }
