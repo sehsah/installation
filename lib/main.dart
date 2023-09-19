@@ -8,12 +8,14 @@ import 'package:installation/config/palette.dart';
 import 'package:installation/controllers/auth_controller.dart';
 import 'package:installation/views/home.dart';
 import 'package:installation/views/login.dart';
+import 'package:installation/views/notification.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+
   Get.create(() => GetMaterialApp());
   // Get.create(() => HomeController());
   Get.create(() => AuthController());
@@ -28,8 +30,11 @@ void main() async {
     event.complete(event.notification);
     print("event ${event}");
   });
-  OneSignal.shared
-      .setNotificationOpenedHandler((OSNotificationOpenedResult result) {});
+  OneSignal.shared.setNotificationOpenedHandler((result) {
+    var notify = result.notification.additionalData;
+    print("notify2222 ${notify}");
+    Get.off(NotificationPage());
+  });
   OneSignal.shared
       .setSubscriptionObserver((OSSubscriptionStateChanges changes) {
     String? onesignalUserId = changes.to.userId;
@@ -40,8 +45,14 @@ void main() async {
         ? GetStorage().write('notification_token', onesignalUserId)
         : '';
   });
+  OneSignal.shared.setNotificationOpenedHandler((openedResult) {
+    print("notify3333 ${openedResult}");
+    Get.to(NotificationPage());
+  });
   runApp(MyApp());
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   @override
@@ -83,6 +94,7 @@ class MyApp extends StatelessWidget {
         themeMode: ThemeMode.light,
         locale: Locale(GetStorage().read('Lang')),
         fallbackLocale: const Locale('en'),
+        navigatorKey: navigatorKey,
         defaultTransition: Transition.fade,
         transitionDuration: const Duration(milliseconds: 100),
         home: GetStorage().read('login_token') == null ? Login() : Home());

@@ -83,7 +83,8 @@ class _NotificationPageState extends State<NotificationPage> {
                     paddingAll: 16,
                     borderRadiusAll: 0,
                     onTap: () {
-                      Get.to(OrderDetails(notifications[index].id));
+                      print(notifications[index].order_id);
+                      Get.to(OrderDetails(notifications[index].order_id));
                     },
                     child: Row(
                       children: [

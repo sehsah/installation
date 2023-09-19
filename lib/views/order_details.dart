@@ -32,7 +32,7 @@ class _OrderDetails extends State<OrderDetails>
   int _currentIndex = 0;
   late int _currentStep = 0;
   late ThemeData theme;
-  File? image;
+  File? image1;
   File? image2;
   File? image3;
   String cable_type = "63";
@@ -81,18 +81,19 @@ class _OrderDetails extends State<OrderDetails>
       DropdownMenuItem(value: "63", child: Text("6.0mm 3-Core")),
       DropdownMenuItem(value: "10-3", child: Text("10.0mm 3-Core")),
       DropdownMenuItem(value: "6-3", child: Text("6.0mm 5-Core")),
-      DropdownMenuItem(value: "10-3", child: Text("10.0mm 5-Core")),
+      DropdownMenuItem(value: "10-5", child: Text("10.0mm 5-Core")),
     ];
     return menuItems2;
   }
 
-  Future<void> _showChoiceDialog(BuildContext context, nameImg) {
+  Future<void> _showChoiceDialog(
+      BuildContext context, Function(File?) setImage) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              "Selecte Option",
+              "Select Option",
               style: TextStyle(color: Colors.blue),
             ),
             content: SingleChildScrollView(
@@ -104,7 +105,7 @@ class _OrderDetails extends State<OrderDetails>
                   ),
                   ListTile(
                     onTap: () {
-                      _openImagePicker(context, nameImg);
+                      _openImagePicker(context, setImage);
                     },
                     title: Text(
                       "gallery",
@@ -120,7 +121,7 @@ class _OrderDetails extends State<OrderDetails>
                   ),
                   ListTile(
                     onTap: () {
-                      _openCamera(context);
+                      _openCamera(context, setImage);
                     },
                     title: Text(
                       "camera",
@@ -137,28 +138,29 @@ class _OrderDetails extends State<OrderDetails>
         });
   }
 
-  Future<void> _openImagePicker(BuildContext context, nameImg) async {
+  Future<void> _openImagePicker(
+      BuildContext context, Function(File?) nameImg) async {
     try {
       final pickedFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
       );
-      setState(() {
-        nameImg = File(pickedFile!.path);
-      });
-
+      if (pickedFile != null) {
+        nameImg(File(pickedFile.path));
+      }
       Navigator.pop(context);
     } on PlatformException catch (e) {
       print('faild ${e}');
     }
   }
 
-  void _openCamera(BuildContext context) async {
+  void _openCamera(BuildContext context, Function(File?) nameImg) async {
     try {
       final pickedFile =
           await ImagePicker().pickImage(source: ImageSource.camera);
-      setState(() {
-        image = File(pickedFile!.path);
-      });
+      if (pickedFile != null) {
+        nameImg(File(pickedFile.path));
+      }
+
       Navigator.pop(context);
     } on PlatformException catch (e) {
       print('faild ${e}');
@@ -895,9 +897,14 @@ class _OrderDetails extends State<OrderDetails>
                                     color: Palette.maincolor,
                                     dashedLine: [3, 0],
                                     child: InkWell(
-                                      onTap: () =>
-                                          _showChoiceDialog(context, image),
-                                      child: image == null
+                                      onTap: () {
+                                        _showChoiceDialog(context, (image) {
+                                          setState(() {
+                                            image1 = image;
+                                          });
+                                        });
+                                      },
+                                      child: image1 == null
                                           ? Container(
                                               width: MediaQuery.of(context)
                                                   .size
@@ -917,10 +924,16 @@ class _OrderDetails extends State<OrderDetails>
                                               )),
                                             )
                                           : InkWell(
-                                              onTap: () => _showChoiceDialog(
-                                                  context, image),
+                                              onTap: () {
+                                                _showChoiceDialog(context,
+                                                    (image) {
+                                                  setState(() {
+                                                    image1 = image;
+                                                  });
+                                                });
+                                              },
                                               child: Image.file(
-                                                image!,
+                                                image1!,
                                                 width: 100.0,
                                                 height: 100.0,
                                                 fit: BoxFit.cover,
@@ -940,8 +953,13 @@ class _OrderDetails extends State<OrderDetails>
                                     color: Palette.maincolor,
                                     dashedLine: [3, 0],
                                     child: InkWell(
-                                      onTap: () =>
-                                          _showChoiceDialog(context, image2),
+                                      onTap: () {
+                                        _showChoiceDialog(context, (image) {
+                                          setState(() {
+                                            image2 = image;
+                                          });
+                                        });
+                                      },
                                       child: image2 == null
                                           ? Container(
                                               width: MediaQuery.of(context)
@@ -962,10 +980,16 @@ class _OrderDetails extends State<OrderDetails>
                                               )),
                                             )
                                           : InkWell(
-                                              onTap: () => _showChoiceDialog(
-                                                  context, image2),
+                                              onTap: () {
+                                                _showChoiceDialog(context,
+                                                    (image) {
+                                                  setState(() {
+                                                    image2 = image;
+                                                  });
+                                                });
+                                              },
                                               child: Image.file(
-                                                image!,
+                                                image2!,
                                                 width: 100.0,
                                                 height: 100.0,
                                                 fit: BoxFit.cover,
@@ -985,8 +1009,13 @@ class _OrderDetails extends State<OrderDetails>
                                     color: Palette.maincolor,
                                     dashedLine: [3, 0],
                                     child: InkWell(
-                                      onTap: () =>
-                                          _showChoiceDialog(context, image3),
+                                      onTap: () {
+                                        _showChoiceDialog(context, (image) {
+                                          setState(() {
+                                            image3 = image;
+                                          });
+                                        });
+                                      },
                                       child: image3 == null
                                           ? Container(
                                               width: MediaQuery.of(context)
@@ -1007,10 +1036,16 @@ class _OrderDetails extends State<OrderDetails>
                                               )),
                                             )
                                           : InkWell(
-                                              onTap: () => _showChoiceDialog(
-                                                  context, image3),
+                                              onTap: () {
+                                                _showChoiceDialog(context,
+                                                    (image) {
+                                                  setState(() {
+                                                    image3 = image;
+                                                  });
+                                                });
+                                              },
                                               child: Image.file(
-                                                image!,
+                                                image3!,
                                                 width: 100.0,
                                                 height: 100.0,
                                                 fit: BoxFit.cover,
@@ -1065,14 +1100,14 @@ class _OrderDetails extends State<OrderDetails>
                                         .toString();
                                     _ActionData['order_id'] =
                                         homeController.order.value!.id;
-                                    _ActionData['image1'] = image != null
-                                        ? "data:image/png;base64,${base64Encode(image!.readAsBytesSync())}"
+                                    _ActionData['image1'] = image1 != null
+                                        ? getBase64FormateFile(image1!.path)
                                         : "";
                                     _ActionData['image2'] = image2 != null
-                                        ? "data:image/png;base64,${base64Encode(image2!.readAsBytesSync())}"
+                                        ? getBase64FormateFile(image2!.path)
                                         : "";
                                     _ActionData['image3'] = image3 != null
-                                        ? "data:image/png;base64,${base64Encode(image3!.readAsBytesSync())}"
+                                        ? getBase64FormateFile(image3!.path)
                                         : "";
                                     print(_ActionData);
 
@@ -1083,7 +1118,7 @@ class _OrderDetails extends State<OrderDetails>
                                     consumption_meter = false;
                                     industrial_socket = false;
                                     isolator = false;
-                                    image = null;
+                                    image1 = null;
                                     image2 = null;
                                     image3 = null;
                                     homeController.addLog(
@@ -1121,6 +1156,13 @@ class _OrderDetails extends State<OrderDetails>
         ),
       ),
     );
+  }
+
+  static String getBase64FormateFile(String path) {
+    File file = File(path);
+    List<int> fileInByte = file.readAsBytesSync();
+    String fileInBase64 = base64Encode(fileInByte);
+    return "data:image/png;base64," + fileInBase64;
   }
 
   Widget LogWdiget() {
