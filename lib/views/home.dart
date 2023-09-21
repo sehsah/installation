@@ -57,11 +57,24 @@ class _Home extends State<Home> {
             ],
           ),
           body: SmartRefresher(
-            enablePullDown: true,
             enablePullUp: true,
+            enablePullDown: true,
             controller: _refreshController,
             onRefresh: _onRefresh,
-            onLoading: _onLoading,
+            onLoading: null,
+            footer:
+                CustomFooter(builder: (BuildContext context, LoadStatus? mode) {
+              Widget body;
+              if (mode == LoadStatus.idle) {
+                body = Text("pull up load");
+              } else {
+                body = Text("");
+              }
+              return Container(
+                height: 55.0,
+                child: Center(child: body),
+              );
+            }),
             child: SingleChildScrollView(
               child: Container(
                 color: Color.fromARGB(255, 243, 243, 243),
@@ -109,7 +122,8 @@ class _Home extends State<Home> {
   }
 
   void _onLoading() async {
-    homeController.getOrder();
+    print(2);
+    // homeController.getOrder();
     _refreshController.loadComplete();
   }
 

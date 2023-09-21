@@ -57,7 +57,6 @@ class Api {
   static Future<Response> AcceptOrder(
       {required Map<String, dynamic> Data}) async {
     FormData formData = FormData.fromMap(Data);
-    print(Data);
     return dio.post('/order/accept', data: formData);
   }
 
@@ -73,7 +72,6 @@ class Api {
   static Future<Response> addLog({required Map<String, dynamic> Data}) async {
     FormData formData = FormData.fromMap(Data);
     print(Data);
-
     return dio.post('/add/log', data: formData);
   }
 

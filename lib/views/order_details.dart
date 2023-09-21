@@ -153,10 +153,14 @@ class _OrderDetails extends State<OrderDetails>
     }
   }
 
-  void _openCamera(BuildContext context, Function(File?) nameImg) async {
+  Future<void> _openCamera(
+      BuildContext context, Function(File?) nameImg) async {
     try {
-      final pickedFile =
-          await ImagePicker().pickImage(source: ImageSource.camera);
+      final pickedFile = await ImagePicker().pickImage(
+        source: ImageSource.camera,
+        maxHeight: 150,
+        imageQuality: 90,
+      );
       if (pickedFile != null) {
         nameImg(File(pickedFile.path));
       }
@@ -803,7 +807,7 @@ class _OrderDetails extends State<OrderDetails>
                                   'Customer Contacted'
                               ? DropdownButton(
                                   isExpanded: true,
-                                  value: cable_type,
+                                  value: '63',
                                   items: dropdownItemsCableType,
                                   onChanged: (value) {
                                     setState(() {
@@ -817,7 +821,7 @@ class _OrderDetails extends State<OrderDetails>
                                   'Customer Contacted'
                               ? DropdownButton(
                                   isExpanded: true,
-                                  value: breaker,
+                                  value: 'S32',
                                   items: dropdownItemsBreaker,
                                   onChanged: (value) {
                                     setState(() {
@@ -1101,16 +1105,17 @@ class _OrderDetails extends State<OrderDetails>
                                     _ActionData['order_id'] =
                                         homeController.order.value!.id;
                                     _ActionData['image1'] = image1 != null
-                                        ? getBase64FormateFile(image1!.path)
+                                        ? getBase64FormateFile(image1!)
                                         : "";
                                     _ActionData['image2'] = image2 != null
-                                        ? getBase64FormateFile(image2!.path)
+                                        ? getBase64FormateFile(image2!)
                                         : "";
                                     _ActionData['image3'] = image3 != null
-                                        ? getBase64FormateFile(image3!.path)
+                                        ? getBase64FormateFile(image3!)
                                         : "";
                                     print(_ActionData);
-
+                                    homeController.addLog(
+                                        Data: _ActionData, context: context);
                                     _commentController.clear();
                                     _pvc_lengthController.clear();
                                     cable_type = "null";
@@ -1121,8 +1126,6 @@ class _OrderDetails extends State<OrderDetails>
                                     image1 = null;
                                     image2 = null;
                                     image3 = null;
-                                    homeController.addLog(
-                                        Data: _ActionData, context: context);
                                   },
                                   style: ButtonStyle(
                                       backgroundColor:
@@ -1158,11 +1161,9 @@ class _OrderDetails extends State<OrderDetails>
     );
   }
 
-  static String getBase64FormateFile(String path) {
-    File file = File(path);
-    List<int> fileInByte = file.readAsBytesSync();
-    String fileInBase64 = base64Encode(fileInByte);
-    return "data:image/png;base64," + fileInBase64;
+  dynamic getBase64FormateFile(path) {
+    String base64Image = base64Encode(path.readAsBytesSync());
+    return 'data:image/jpeg;base64,$base64Image';
   }
 
   Widget LogWdiget() {
